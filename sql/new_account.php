@@ -5,23 +5,23 @@ $db = getDataBaseConnection();
 
 // check if the form has been submitted
 if (isset($_POST['register'])) {
-  // retrieve form data
   $name = $_POST['name'];
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
+  $id = 31;
+  $status = 'Client';
 
-  // insert user into the database
-  $stmt = $db->prepare("INSERT INTO users (name, username, email, password) VALUES (:name, :username, :email, :password)");
+  echo ($name);
+
+  $stmt = $db->prepare("INSERT INTO user (id, status, name, username, email, password) VALUES (:id, :status, :name, :username, :email, :password)");
+  $stmt->bindParam(':id', $id);
+  $stmt->bindParam(':status', $status);
   $stmt->bindParam(':name', $name);
   $stmt->bindParam(':username', $username);
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
-  $stmt->execute();
-
-  // redirect to login page
-  header('Location: login.php');
-  exit();
+  $stmt->execute();  
 }
 ?>
 

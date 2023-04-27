@@ -1,6 +1,7 @@
 <?php
-// connect to the database
-require_once('')
+require_once('connection.php');
+$db = getDataBaseConnection();
+
 
 // check if the form has been submitted
 if (isset($_POST['login'])) {
@@ -21,7 +22,7 @@ if (isset($_POST['login'])) {
     $_SESSION['user_id'] = $user['id'];
 
     // redirect to dashboard
-    header('Location: dashboard.php');
+    header('Location: ticket.php');
     exit();
   } else {
     // login failed, show error message
@@ -40,6 +41,3 @@ if (isset($_POST['login'])) {
 
   <input type="submit" name="login" value="Login">
 </form>
-
-<!-- show error message if login failed -->
-<?php if (isset($error)) { echo "<p>$error</p>"; } ?>
