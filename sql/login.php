@@ -16,7 +16,7 @@ if (isset($_POST['login'])) {
     session_start();
     $_SESSION['user_id'] = $user['id'];
 
-    header('Location: main.php');
+    header('Location: ticket.php');
     exit();
   } else {
     $error = "Invalid username or password";
@@ -33,3 +33,4 @@ if (isset($_POST['login'])) {
 
   <input type="submit" name="login" value="Login">
 </form>
+<a href="new_account.php">Create account</a>

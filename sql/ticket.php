@@ -14,36 +14,35 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // retrieve user data from the database
-$stmt = $db->prepare("SELECT * FROM users WHERE id = :id");
+
+$stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
 $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$user = $stmt->fetch();
 
 // check if the form has been submitted
 if (isset($_POST['submit_ticket'])) {
   // retrieve form data
-  $subject = $_POST['subject'];
+  $hashtags = $_POST['subject'];
   $message = $_POST['message'];
-  $department = $_POST['department'];
 
   // insert ticket data into the database
-  $stmt = $db->prepare("INSERT INTO tickets (user_id, subject, message, department) VALUES (:user_id, :subject, :message, :department)");
-  $stmt->bindParam(':user_id', $_SESSION['user_id']);
-  $stmt->bindParam(':subject', $subject);
+  $stmt = $db->prepare("INSERT INTO ticket (client_id, hashtags, message) VALUES (:client_id, :hashtags, :message)");
+  $stmt->bindParam(':client_id', $_SESSION['client_id']);
+  $stmt->bindParam(':hashtags', $hashtags);
   $stmt->bindParam(':message', $message);
-  $stmt->bindParam(':department', $department);
   $stmt->execute();
 
   // redirect to dashboard
-  header('Location: dashboard.php');
-  exit();
+  //header('Location: dashboard.php');
+  //exit();
 }
 
 // retrieve tickets submitted by the user
-$stmt = $db->prepare("SELECT * FROM tickets WHERE user_id = :user_id ORDER BY created_at DESC");
-$stmt->bindParam(':user_id', $_SESSION['user_id']);
+$stmt = $db->prepare("SELECT * FROM ticket WHERE client_id = :client_id");
+$stmt->bindParam(':client_id', $_SESSION['client_id']);
 $stmt->execute();
-$tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$tickets = $stmt->fetchAll();
 ?>
 
 <!-- ticket submission form -->
@@ -69,7 +68,7 @@ $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <table>
   <thead>
     <tr>
-      <th>Subject</th>
+      <th>Hashtags</th>
       <th>Status</th>
       <th>Department</th>
       <th>Created at</th>
@@ -79,7 +78,7 @@ $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <tbody>
     <?php foreach ($tickets as $ticket) { ?>
       <tr>
-        <td><?= $ticket['subject'] ?></td>
+        <td><?= $ticket['hashtags'] ?></td>
         <td><?= $ticket['status'] ?></td>
         <td><?= $ticket['department'] ?></td>
         <td><?= $ticket['created_at'] ?></td>
