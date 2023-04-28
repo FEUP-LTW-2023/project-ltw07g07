@@ -1,14 +1,11 @@
 <?php
-// start session
 session_start();
 
-// connect to the database
 require_once('connection.php');
 $db = getDataBaseConnection();
 
 // check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-  // redirect to login page
   header('Location: login.php');
   exit();
 }

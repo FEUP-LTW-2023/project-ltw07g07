@@ -16,9 +16,10 @@ if (isset($_POST['login'])) {
     session_start();
     $_SESSION['user_id'] = $user['id'];
 
-    header('Location: ticket.php');
+    header('Location: main.php');
     exit();
   } else {
+    echo ("No");
     $error = "Invalid username or password";
   }
 }
