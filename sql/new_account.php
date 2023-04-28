@@ -1,9 +1,9 @@
 <?php
-// connect to the database
+
 require_once('connection.php');
 $db = getDataBaseConnection();
 
-// check if the form has been submitted
+
 if (isset($_POST['register'])) {
   $name = $_POST['name'];
   $username = $_POST['username'];
@@ -18,10 +18,15 @@ if (isset($_POST['register'])) {
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
   $stmt->execute();  
+
+  session_start();
+  $_SESSION['user_id'] = $user['id'];
+
+  header('Location: main.php');
+  exit();
 }
 ?>
 
-<!-- registration form -->
 <form action="" method="POST">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" required>
