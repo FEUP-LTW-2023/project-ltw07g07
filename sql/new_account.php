@@ -9,13 +9,9 @@ if (isset($_POST['register'])) {
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
-  $id = 31;
   $status = 'Client';
 
-  echo ($name);
-
-  $stmt = $db->prepare("INSERT INTO user (id, status, name, username, email, password) VALUES (:id, :status, :name, :username, :email, :password)");
-  $stmt->bindParam(':id', $id);
+  $stmt = $db->prepare("INSERT INTO user (status, name, username, email, password) VALUES (:status, :name, :username, :email, :password)");
   $stmt->bindParam(':status', $status);
   $stmt->bindParam(':name', $name);
   $stmt->bindParam(':username', $username);
