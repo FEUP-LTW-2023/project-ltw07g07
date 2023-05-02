@@ -19,7 +19,7 @@ if (isset($_POST['login'])) {
     header('Location: main.php');
     exit();
   } else {
-    echo ("No");
+    echo ("Invalid username or password");
     $error = "Invalid username or password";
   }
 }

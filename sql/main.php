@@ -23,3 +23,5 @@ $user = $stmt->fetch();
     <a href="ticket.php"><li>Ticket</li></a>
     <a href="profile.php"><li>Profile</li></a>
 </ul>
+
+<a href="login.php">Logout</a>

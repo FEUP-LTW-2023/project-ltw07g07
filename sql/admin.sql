@@ -1,4 +1,4 @@
-DROP TABLE user IF EXISTS;
+DROP TABLE IF EXISTS user;
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   status TEXT NOT NULL,
@@ -8,27 +8,27 @@ CREATE TABLE user (
   email TEXT NOT NULL
 );
 
-DROP TABLE department IF EXISTS
+DROP TABLE IF EXISTS department;
 CREATE TABLE department (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL UNIQUE
 );
 
-DROP TABLE ticket IF EXISTS
+DROP TABLE IF EXISTS ticket;
 CREATE TABLE ticket (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   client_id INTEGER NOT NULL,
   department TEXT,
-  hashtags VARCHAR NOT NULL,
+  hashtags VARCHAR,
   message TEXT NOT NULL,
-  status TEXT NOT NULL DEFAULT 'Open',
-  priority TEXT NOT NULL DEFAULT 'Low',
+  status TEXT DEFAULT 'Open',
+  priority TEXT DEFAULT 'Low',
   assigned_to INTEGER,
   FOREIGN KEY (client_id) REFERENCES users(id),
   FOREIGN KEY (assigned_to) REFERENCES users(id)
 );
 
-DROP TABLE faq IF EXISTS
+DROP TABLE IF EXISTS faq;
 CREATE TABLE faq (
   id INTEGER PRIMARY KEY,
   client_id INTEGER NOT NULL,

@@ -51,16 +51,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <p> Username: <?=$user['username']?> </p> 
 <p> Email: <?=$user['email']?> </p>
 
-    <a href="#" onclick="showForm()">Edit profile</a>
-    <form id="myForm" style="display: none;" action="" method="post">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name"><br>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username"><br>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email"><br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password"><br>
-      <input type="submit" value="Edit">
+<a href="#" onclick="showForm()">Edit profile</a>
+<form id="myForm" style="display: none;" action="" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username"><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br>
+    <input type="submit" value="Edit">
       
-    </form>
+</form>
+
+<br>
+
+<a href="login.php">Logout</a>
