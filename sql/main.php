@@ -16,7 +16,7 @@ $user = $stmt->fetch();
 
 
 ?>
-
+<link rel="stylesheet" href="style.css">
 <h1> MAIN PAGE </h1>
 
 <ul>

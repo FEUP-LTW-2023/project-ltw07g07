@@ -48,6 +48,7 @@ $tickets = $stmt->fetchAll();
 ?>
 
 <!-- ticket submission form -->
+<link rel="stylesheet" href="style.css">
 <form action="" method="POST">
   <label for="message">Message:</label>
   <textarea id="message" name="message" rows="5" required></textarea>

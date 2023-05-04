@@ -27,6 +27,7 @@ if (isset($_POST['register'])) {
 }
 ?>
 
+<link rel="stylesheet" href="style.css">
 <form action="" method="POST">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" required>

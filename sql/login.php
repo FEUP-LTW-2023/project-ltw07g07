@@ -25,6 +25,7 @@ if (isset($_POST['login'])) {
 }
 ?>
 
+<link rel="stylesheet" href="style.css">
 <form action="" method="POST">
   <label for="username">Username:</label>
   <input type="text" id="username" name="username" required>
