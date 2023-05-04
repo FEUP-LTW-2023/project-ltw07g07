@@ -14,6 +14,9 @@ CREATE TABLE department (
   name TEXT NOT NULL UNIQUE
 );
 
+
+
+
 DROP TABLE IF EXISTS ticket;
 CREATE TABLE ticket (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,6 +30,7 @@ CREATE TABLE ticket (
   FOREIGN KEY (client_id) REFERENCES users(id),
   FOREIGN KEY (assigned_to) REFERENCES users(id)
 );
+
 
 DROP TABLE IF EXISTS faq;
 CREATE TABLE faq (
