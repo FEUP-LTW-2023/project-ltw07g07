@@ -1,31 +1,32 @@
 <?php
-// connect to the database
+
 require_once('connection.php');
 $db = getDataBaseConnection();
 
-// check if the form has been submitted
+
 if (isset($_POST['register'])) {
-  // retrieve form data
   $name = $_POST['name'];
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
+  $status = 'Client';
 
-  // insert user into the database
-  $stmt = $db->prepare("INSERT INTO users (name, username, email, password) VALUES (:name, :username, :email, :password)");
+  $stmt = $db->prepare("INSERT INTO user (status, name, username, email, password) VALUES (:status, :name, :username, :email, :password)");
+  $stmt->bindParam(':status', $status);
   $stmt->bindParam(':name', $name);
   $stmt->bindParam(':username', $username);
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
-  $stmt->execute();
+  $stmt->execute();  
 
-  // redirect to login page
-  header('Location: login.php');
+  session_start();
+  $_SESSION['user_id'] = $user['id'];
+
+  header('Location: main.php');
   exit();
 }
 ?>
 
-<!-- registration form -->
 <form action="" method="POST">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" required>
