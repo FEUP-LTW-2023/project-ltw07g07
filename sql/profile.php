@@ -68,3 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br>
 
 <a href="login.php">Logout</a>
+
+<footer>
+    Trouble Ticket
+</footer>

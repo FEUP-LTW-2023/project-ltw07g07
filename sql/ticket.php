@@ -68,3 +68,7 @@ $tickets = $stmt->fetchAll();
 </form>
 
 <a href="login.php">Logout</a>
+
+<footer>
+    Trouble Ticket
+  </footer>

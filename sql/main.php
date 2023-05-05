@@ -14,6 +14,14 @@ $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
 
+$stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status
+                      FROM ticket
+                      JOIN user ON ticket.client_id = user.id
+                      WHERE user.id = :id");
+$stmt->bindParam(':id', $_SESSION['user_id']);
+$stmt->execute();
+$tickets = $stmt->fetchAll();
+
 
 ?>
 
@@ -73,9 +81,9 @@ $user = $stmt->fetch();
       <!-- just for the hamburguer menu in responsive layout -->
 
       <ul>
-        <li><a href="#" onclick="showDep1()">Show dep1</a></li>
-        <li><a href="#" onclick="showDep2()">Show dep2</a></li>
-        <li><a href="#" onclick="showDep3()">Show dep3</a></li>
+        <li><a href="#" onclick="showDep1()">Accounting</a></li>
+        <li><a href="#" onclick="showDep2()">Sales</a></li>
+        <li><a href="#" onclick="showDep3()">Support</a></li>
       </ul>
     </nav>
 
@@ -87,12 +95,18 @@ $user = $stmt->fetch();
     <p id = "dep3" style="display: none;">dep3</p>
 
   
-
+<?php foreach ($tickets as $ticket): ?>
+  <div id = 'ticket'>
+    <h2><?= $ticket['client_name'] ?></h2>
+    <p><?= $ticket['message'] ?></p>
+    <p>Status: <?= $ticket['status'] ?></p>
+  </div>
+<?php endforeach; ?>
 
 
 
   <footer>
-    LTW ticket project 2023
+    Trouble Ticket
   </footer>
   </body>
 </html>
