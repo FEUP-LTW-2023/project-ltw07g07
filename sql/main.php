@@ -1,5 +1,7 @@
 <?php
 
+$ticket_id = 100;
+
 session_start();
 require_once('connection.php');
 $db = getDataBaseConnection();
@@ -21,6 +23,19 @@ $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.st
 $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $tickets = $stmt->fetchAll();
+
+if (isset($_POST['reply'])) {
+
+  $message = $_POST['message'];
+
+  $stmt = $db->prepare("INSERT INTO reply (client_id, message, ticket_id) VALUES (:client_id, :message,:ticket_id)");
+  $stmt->bindParam(':client_id', $_SESSION['user_id']);
+  $stmt->bindParam(':message', $message);
+  $stmt->bindParam(':ticket_id', $ticket_id);
+
+  $stmt->execute();
+
+}
 
 
 ?>
@@ -56,6 +71,9 @@ $tickets = $stmt->fetchAll();
             document.getElementById("dep1").style.display = "none";
             document.getElementById("dep2").style.display = "none";
             document.getElementById("dep3").style.display = "block";
+        }
+        function showForm() {
+            document.getElementById("reply").style.display = "block";
         }
     </script>
 
@@ -95,12 +113,21 @@ $tickets = $stmt->fetchAll();
     <p id = "dep3" style="display: none;">dep3</p>
 
   
-<?php foreach ($tickets as $ticket): ?>
+<?php foreach ($tickets as $ticket):
+   $ticket_id = $ticket['id']; ?>
   <div id = 'ticket'>
     <h2><?= $ticket['client_name'] ?></h2>
     <p><?= $ticket['message'] ?></p>
     <p>Status: <?= $ticket['status'] ?></p>
+
   </div>
+  <a href="#" onclick="showForm()">Reply</a>
+    <form id="reply" style="display: none;" action="" method="post">
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+    <input type="submit" name = "reply" value="Reply">
+      
+</form>
 <?php endforeach; ?>
 
 

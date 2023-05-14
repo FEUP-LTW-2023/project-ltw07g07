@@ -34,8 +34,19 @@ CREATE TABLE ticket (
 
 DROP TABLE IF EXISTS faq;
 CREATE TABLE faq (
-  id INTEGER PRIMARY KEY,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   client_id INTEGER NOT NULL,
   message TEXT NOT NULL,
   FOREIGN KEY (client_id) REFERENCES users(id)
+);
+
+
+DROP TABLE IF EXISTS reply;
+CREATE TABLE reply (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  client_id INTEGER NOT NULL,
+  message TEXT NOT NULL,
+  ticket_id INTEGER NOT NULL,
+  FOREIGN KEY (client_id) REFERENCES users(id),
+  FOREIGN KEY (ticket_id) REFERENCES tickets(id)
 );

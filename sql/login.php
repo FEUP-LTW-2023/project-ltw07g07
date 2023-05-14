@@ -31,7 +31,7 @@ if (isset($_POST['login'])) {
   <head>
     <title> Login </title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
   </head>
 
 
@@ -54,15 +54,17 @@ if (isset($_POST['login'])) {
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" required>
 
-  <input type="submit" name="login" value="Login">
+  <div class="button-container">
+      <input type="submit" name="login" value="Login">
+      <a href="new_account.php" class="create-account-link">Create account</a>
+    </div>
   </form>
-  <a href="new_account.php">Create account</a>
 
 
 
 
   <footer>
-    LTW ticket project 2023
+    Trouble Ticket
   </footer>
   </body>
 </html>
