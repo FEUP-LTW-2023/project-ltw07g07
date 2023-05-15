@@ -27,19 +27,36 @@ if (isset($_POST['register'])) {
 }
 ?>
 
-<link rel="stylesheet" href="style.css">
-<form action="" method="POST">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required>
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title> Register </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style2.css">
+  </head>
 
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" required>
+  <header>
+    <h1> Trouble Ticket Handler </h1>
+  </header>
 
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
+  <form action="" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
 
-  <input type="submit" name="register" value="Register">
-</form>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <input type="submit" name="register" value="Register">
+  </form>
+
+  <footer>
+    Trouble Ticket
+  </footer>
+  
+</html>

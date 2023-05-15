@@ -38,37 +38,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-<link rel="stylesheet" href="style.css">
-<head>
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title> Profile </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style2.css">
     <script>
         function showForm() {
             document.getElementById("myForm").style.display = "block";
         }
     </script>
-</head>
+  </head>
 
-<p> Name: <?=$user['name']?> </p> 
-<p> Username: <?=$user['username']?> </p> 
-<p> Email: <?=$user['email']?> </p>
+  <header>
+    <h1> <a href="main.php">Trouble Ticket Handler </a></h1>
+  </header>
 
-<a href="#" onclick="showForm()">Edit profile</a>
-<form id="myForm" style="display: none;" action="" method="post">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name"><br>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username"><br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email"><br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password"><br>
-    <input type="submit" value="Edit">
-      
-</form>
 
-<br>
+    <p class = "p-prof"> Name: <?=$user['name']?> </p> 
+    <p class = "p-prof"> Username: <?=$user['username']?> </p> 
+    <p class = "p-prof"> Email: <?=$user['email']?> </p>
 
-<a href="login.php">Logout</a>
+    <a href="#" class = "a-prof" onclick="showForm()">Edit profile</a>
+    <form id="myForm" style="display: none;" action="" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Edit">
+        
+    </form>
 
-<footer>
-    Trouble Ticket
-</footer>
+    <br>
+
+    <a href="login.php" class = "a-prof">Logout</a>
+
+    <footer>
+        Trouble Ticket
+    </footer>
+</html>

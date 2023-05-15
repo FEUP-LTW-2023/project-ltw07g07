@@ -54,7 +54,7 @@ if (isset($_POST['reply'])) {
   <head>
     <title> Trouble Ticket Handler </title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
 
     <script>
         function showDep1() {
@@ -79,19 +79,18 @@ if (isset($_POST['reply'])) {
 
   </head>
 
-    <body>
-  <header>
-    <h1> Trouble Ticket handler </h1>
-    <h1> $ </h1>
+  <body>
 
+    <header>
+      <h1> <a href="main.php"> Trouble Ticket Handler </a></h1>
 
-  </header>
+    </header>
 
-    <h1> MAIN PAGE </h1>
+    <h1 class = "main"> MAIN PAGE </h1>
 
-    <ul>
-        <a href="ticket.php"><li> Create new Ticket</li></a>
-        <a href="profile.php"><li>  <?= $user['name'] ?> </li></a>
+    <ul id = "menu">
+        <a href="ticket.php"><li class="first"> Create new Ticket</li></a>
+        <a href="profile.php"><li class="last">  <?= $user['name'] ?> </li></a>
     </ul>
 
 
@@ -105,35 +104,35 @@ if (isset($_POST['reply'])) {
       </ul>
     </nav>
 
-    <a href="login.php">Logout</a>  
+    <a href="login.php" class = "a-prof">Logout</a>  
 
 
     <p id = "dep1" style="display: none;">dep1</p>
     <p id = "dep2" style="display: none;">dep2</p>
     <p id = "dep3" style="display: none;">dep3</p>
 
-  
-<?php foreach ($tickets as $ticket):
-   $ticket_id = $ticket['id']; ?>
-  <div id = 'ticket'>
-    <h2><?= $ticket['client_name'] ?></h2>
-    <p><?= $ticket['message'] ?></p>
-    <p>Status: <?= $ticket['status'] ?></p>
+    
+  <?php foreach ($tickets as $ticket):
+     ?>
+    <div id = 'ticket'>
+      <h2><?= $ticket['client_name'] ?></h2>
+      <p><?= $ticket['message'] ?></p>
+      <p>Status: <?= $ticket['status'] ?></p>
 
-  </div>
-  <a href="#" onclick="showForm()">Reply</a>
-    <form id="reply" style="display: none;" action="" method="post">
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-    <input type="submit" name = "reply" value="Reply">
-      
-</form>
-<?php endforeach; ?>
+    </div>
+    <a href="#" class= "reply-ticket" onclick="showForm()">Reply</a>
+      <form id="reply" style="display: none;" action="" method="post">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      <input type="submit" name = "reply" value="Reply">
+        
+    </form>
+  <?php endforeach; ?>
 
 
 
-  <footer>
-    Trouble Ticket
-  </footer>
+    <footer>
+      Trouble Ticket
+    </footer>
   </body>
 </html>

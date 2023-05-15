@@ -48,27 +48,41 @@ $tickets = $stmt->fetchAll();
 ?>
 
 <!-- ticket submission form -->
-<link rel="stylesheet" href="style.css">
-<form action="" method="POST">
-  <label for="message">Message:</label>
-  <textarea id="message" name="message" rows="5" required></textarea>
-  <label for="department">Department:</label>
-  <select id="department" name="department">
-    <option value="">Select department</option>
-    <option value="accounting">Accounting</option>
-    <option value="sales">Sales</option>
-    <option value="support">Support</option>
-  </select>
-  <br>
-  <input type="checkbox" id="high" name="high" value="on">
-  <label for="high">High priority</label>
-  <br>
-  <br>
-  <input type="submit" name="submit_ticket" value="Submit">
-</form>
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title> Ticket </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style2.css">
+  </head>
 
-<a href="login.php">Logout</a>
+  <header>
+    <h1> <a href="main.php"> Trouble Ticket Handler </a></h1>
+  </header>
 
-<footer>
-    Trouble Ticket
+  <form action="" method="POST">
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+    <label for="department">Department:</label>
+    <select id="department" name="department">
+      <option value="">Select department</option>
+      <option value="accounting">Accounting</option>
+      <option value="sales">Sales</option>
+      <option value="support">Support</option>
+    </select>
+    <br>
+    
+    <input type="checkbox" id="high" class = "priority" name="high" value="on">
+    <label for="high" class = "priority">High priority</label>
+  
+    <br>
+    <br>
+    <input type="submit" name="submit_ticket" value="Submit">
+  </form>
+
+  <a href="login.php" class = "a-prof">Logout</a>
+
+  <footer>
+      Trouble Ticket
   </footer>
+</html>
