@@ -54,7 +54,12 @@ if (isset($_POST['register'])) {
     <input type="password" id="password" name="password" required>
 
     <label for="status">Status:</label>
-    <input type="text" id="status" name="status" required>
+    <select id="status" name="status">
+      <option value="Client">Client</option>
+      <option value="Agent">Agent</option>
+      <option value="Admin">Admin</option>
+    </select>
+
 
     <input type="submit" name="register" value="Register">
   </form>
