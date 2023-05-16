@@ -40,6 +40,13 @@ $stmt = $db->prepare("SELECT message, ticket_id, name FROM reply, user
                        ORDER BY reply.id ASC");
 $stmt->execute();
 $replies = $stmt->fetchAll();
+
+
+function closeTicket($idTicket){
+    $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' where ticket_id = :ticket_id");
+    $stmt->bindParam(':ticket_id', $idTicket);
+    $stmt->execute();
+}
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +95,7 @@ $replies = $stmt->fetchAll();
     <h2><?= $ticket['client_name'] ?></h2>
     <p><?= $ticket['message'] ?></p>
     <p>Status: <?= $ticket['status'] ?></p>
+    <a href="#" onclick = "closeTicket(<?= $ticket['ticket_id'] ?>)"> Close ticket </a>
   </div>
 
 
