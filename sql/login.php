@@ -45,7 +45,13 @@ if (isset($_POST['login'])) {
     session_start();
     $_SESSION['user_id'] = $user['id'];
 
-    header('Location: main.php');
+    if ($user['status'] == 'Agent'){
+      header('Location: agent.php');
+    }
+    else {
+
+      header('Location: main.php');
+    }
     exit();
   } else {?>
     <p class = "error-login">Invalid username or password</p>

@@ -10,6 +10,7 @@ if (isset($_POST['register'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
   $status = 'Client';
+  if ($_POST['status'] == 'Agent') $status = 'Agent';
 
   $stmt = $db->prepare("INSERT INTO user (status, name, username, email, password) VALUES (:status, :name, :username, :email, :password)");
   $stmt->bindParam(':status', $status);
@@ -51,6 +52,9 @@ if (isset($_POST['register'])) {
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
+
+    <label for="status">Status:</label>
+    <input type="text" id="status" name="status" required>
 
     <input type="submit" name="register" value="Register">
   </form>

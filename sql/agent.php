@@ -13,18 +13,9 @@ $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
 
-/*if ($user['status'] == 'Agent'){
-  echo '<script>
-    document.getElementById("agent").style.display = "block";
-  </script>';
-}*/
-
 $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
                       FROM ticket
-                      JOIN user ON ticket.client_id = user.id
-                      WHERE user.id = :id");
-
-$stmt->bindParam(':id', $_SESSION['user_id']);
+                      JOIN user ON ticket.client_id = user.id");
 $stmt->execute();
 $tickets = $stmt->fetchAll();
 
@@ -68,7 +59,7 @@ $replies = $stmt->fetchAll();
 
 <body>
 <header>
-    <h1><a href="main.php">Trouble Ticket Handler</a></h1>
+    <h1><a href="agent.php">Trouble Ticket Handler - Agent</a></h1>
 </header>
 
 <h1 class="main">MAIN PAGE</h1>

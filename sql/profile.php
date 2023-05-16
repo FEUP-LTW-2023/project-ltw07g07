@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':id', $_SESSION['user_id']);
     $stmt->execute();
     $user = $stmt->fetch();
+
+    $status = $user['status'];
 }
 
 ?>
@@ -52,8 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </head>
 
   <header>
-    <h1> <a href="main.php">Trouble Ticket Handler </a></h1>
-  </header>
+    <?php if ($user['status'] == 'Agent'): ?>
+        <h1><a href="agent.php">Trouble Ticket Handler</a></h1>
+    <?php else: ?>
+        <h1><a href="main.php">Trouble Ticket Handler</a></h1>
+    <?php endif; ?>
+</header>
+
 
 
     <p class = "p-prof"> Name: <?=$user['name']?> </p> 
