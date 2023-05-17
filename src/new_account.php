@@ -9,8 +9,7 @@ if (isset($_POST['register'])) {
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
-  $status = 'Client';
-  if ($_POST['status'] == 'Agent') $status = 'Agent';
+  $status = $_POST['status'];
 
   $stmt = $db->prepare("INSERT INTO user (status, name, username, email, password) VALUES (:status, :name, :username, :email, :password)");
   $stmt->bindParam(':status', $status);

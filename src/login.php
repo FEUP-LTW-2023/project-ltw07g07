@@ -48,6 +48,9 @@ if (isset($_POST['login'])) {
     if ($user['status'] == 'Agent'){
       header('Location: agent.php');
     }
+    else if ($user['status'] == 'Admin'){
+      header('Location: admin.php');
+    }
     else {
 
       header('Location: main.php');

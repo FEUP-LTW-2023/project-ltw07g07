@@ -8,10 +8,16 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+
 $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
 $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
+
+if ($user['status'] != 'Admin'){
+  header('Location: login.php');
+  exit();
+}
 
 $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
                       FROM ticket
@@ -66,7 +72,7 @@ function closeTicket($idTicket){
 
 <body>
 <header>
-    <h1><a href="agent.php">Trouble Ticket Handler - Agent</a></h1>
+    <h1><a href="agent.php">Trouble Ticket Handler - Admin</a></h1>
 </header>
 
 <h1 class="main">MAIN PAGE</h1>
