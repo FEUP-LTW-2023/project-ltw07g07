@@ -72,7 +72,7 @@ function closeTicket($idTicket){
 
 <body>
 <header>
-    <h1><a href="agent.php">Trouble Ticket Handler - Admin</a></h1>
+    <h1><a href="admin.php">Trouble Ticket Handler - Admin</a></h1>
 </header>
 
 <h1 class="main">MAIN PAGE</h1>
@@ -82,7 +82,10 @@ function closeTicket($idTicket){
         <li class="first">Create new Ticket</li>
     </a>
     <a href="profile.php">
-        <li class="last"><?= $user['name'] ?></li>
+        <li class="second"><?= $user['name'] ?></li>
+    </a>
+    <a href="admin_menu.php">
+        <li class = "last"> Admin Menu </li>
     </a>
 </ul>
 
