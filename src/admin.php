@@ -123,6 +123,7 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
 
 
 <form action="" method="post">
+<label for="sort">Department:</label>
   <select name="department">
   <?php foreach ($departments as $deparment): ?>
     <option value="<?php echo $deparment['name']; ?>"> <?php echo $deparment['name']; ?> </option>
