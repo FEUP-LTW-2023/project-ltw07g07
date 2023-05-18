@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
   endforeach; ?>
 
-<a href="#" class = "a-prof" onclick="showFormDep()">Add Department</a>
+<a href="#" class = "dep-ar" onclick="showFormDep()">Add Department</a>
 <form id="myForm" style="display: none;" action="" method="post">
         <label for="name">Department:</label>
         <input type="text" id="name" name="name"><br>
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
 </form>
 
-<a href="#" class = "a-prof" onclick="showFormRem()">Remove Department</a>
+<a href="#" class = "dep-ar" onclick="showFormRem()">Remove Department</a>
 <form id="myForm2" style="display: none;" action="" method="post">
         <label for="name">Department:</label>
         <input type="text" id="name" name="name"><br>

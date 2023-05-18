@@ -3,6 +3,7 @@ body {
   background-color: rgb(250, 238, 220);
   margin: 15;
   padding: 0;
+  margin-bottom: 70px;
 }
 
 header {
@@ -111,6 +112,18 @@ input[type="submit"] {
   font-weight: bold;
 }
 
+
+.p-prof1{
+  margin-top: 85px;
+  color: white;
+  border: 1px solid black;
+  background-color: black;
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}
+
+
 .p-prof {
   color: white;
   border: 1px solid black;
@@ -125,6 +138,19 @@ input[type="submit"] {
   background-color:rgba(144, 158, 54, 0.5);
   padding: 10px;
   margin-left: 70px;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  box-sizing: content-box;
+  margin-bottom: 20px;
+}
+
+.dep-ar{
+  background-color:rgba(144, 158, 54, 0.5);
+  margin-left: 70px;
+  margin-right: 1150px;
+  padding: 10px;
   display: inline-block;
   font-size: 18px;
   font-weight: bold;

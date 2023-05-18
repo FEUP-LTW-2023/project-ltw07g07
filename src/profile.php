@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <a href="login.php" class = "a-prof">Logout</a>
     
-    <p class = "p-prof"> Name: <?=$user['name']?> </p> 
+    <p class = "p-prof1"> Name: <?=$user['name']?> </p> 
     <p class = "p-prof"> Username: <?=$user['username']?> </p> 
     <p class = "p-prof"> Email: <?=$user['email']?> </p>
 
