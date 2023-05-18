@@ -52,6 +52,11 @@ $stmt->execute();
 $departments = $stmt->fetchAll();
 
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $dep = $_POST["department"];
+  showDepEach($dep);
+}
+
 
 
 function closeTicket($idTicket){
@@ -113,6 +118,18 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
         <li class = "last"> Admin Menu </li>
     </a>
 </ul>
+
+
+
+
+<form action="" method="post">
+  <select name="department">
+  <?php foreach ($departments as $deparment): ?>
+    <option value="<?php echo $deparment['name']; ?>"> <?php echo $deparment['name']; ?> </option>
+    <?php endforeach; ?>
+  </select>
+  <input type="submit" value="Submit">
+</form>
 
 
 <nav id="menu">

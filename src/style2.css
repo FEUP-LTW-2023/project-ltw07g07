@@ -223,35 +223,6 @@ ul a li {
   background-color:rgb(81, 81, 207);
 }
 
-nav ul {
-  display: flex;
-  justify-content: space-between;
-  background-color: #f2f2f2;
-  padding: 10px;
-  margin-bottom: 50px;
-}
-
-nav ul li {
-  flex: 1;
-  margin: 0 5px;
-  text-align: center;
-  border-right: 1px solid black;
-}
-
-
-
-nav ul li {
-  background-color: rgb(28, 79, 28);
-}
-
-
-nav ul li a {
-  display: block;
-  padding: 10px;
-  color: white;
-  text-decoration: none;
-  font-size: 23px;
-}
 
 #ticket {
   background-color: #f2f2f2;
