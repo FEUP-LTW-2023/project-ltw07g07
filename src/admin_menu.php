@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <footer>
-   Trouble Ticket
+&copy; Trouble Ticket
 </footer>
 </body>
 </html>

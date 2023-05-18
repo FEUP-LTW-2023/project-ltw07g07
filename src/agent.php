@@ -108,7 +108,7 @@ if ($_GET['function'] === 'showDepEach') {
     <h1><a href="agent.php">Trouble Ticket Handler - Agent</a></h1>
 </header>
 
-<h1 class="main">MAIN PAGE</h1>
+<a href="login.php" class="a-prof">Logout</a>
 
 <ul id="menu">
     <a href="ticket.php">
@@ -127,11 +127,15 @@ if ($_GET['function'] === 'showDepEach') {
     </ul>
 </nav>
 
-<a href="login.php" class="a-prof">Logout</a>
+
 
 <label for="sort">Sort by:</label>
 <select id="sort" name="sort">
-  <option value=""></option>
+<option value="">Date</option>
+  <option value="">Status</option>
+  <option value="">Priority</option>
+  <option value="">Assigned Agent</option>
+  <option value="">Hashtag</option>
 </select>
 
 <?php foreach ($tickets as $ticket): ?>
@@ -169,7 +173,7 @@ if ($_GET['function'] === 'showDepEach') {
 
 
 <footer>
-   Trouble Ticket
+   &copy; Trouble Ticket
 </footer>
 </body>
 </html>

@@ -98,9 +98,8 @@ $tickets = $stmt->fetchAll();
     <input type="submit" name="submit_ticket" value="Submit">
   </form>
 
-  <a href="login.php" class = "a-prof">Logout</a>
 
   <footer>
-      Trouble Ticket
+  &copy; Trouble Ticket
   </footer>
 </html>

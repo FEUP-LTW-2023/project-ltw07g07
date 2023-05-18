@@ -64,7 +64,7 @@ if (isset($_POST['register'])) {
   </form>
 
   <footer>
-    Trouble Ticket
+  &copy; Trouble Ticket
   </footer>
   
 </html>

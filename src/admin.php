@@ -122,7 +122,7 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
     <h1><a href="admin.php">Trouble Ticket Handler - Admin</a></h1>
 </header>
 
-<h1 class="main">MAIN PAGE</h1>
+<a href="login.php" class="a-prof">Logout</a>
 
 <ul id="menu">
     <a href="ticket.php">
@@ -146,11 +146,15 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
 </nav>
 
 
-<a href="login.php" class="a-prof">Logout</a>
+
 
 <label for="sort">Sort by:</label>
 <select id="sort" name="sort">
-  <option value=""></option>
+  <option value="">Date</option>
+  <option value="">Status</option>
+  <option value="">Priority</option>
+  <option value="">Assigned Agent</option>
+  <option value="">Hashtag</option>
 </select>
 
 <section id = "tickets">
@@ -192,7 +196,7 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
 
 
 <footer>
-   Trouble Ticket
+&copy; Trouble Ticket
 </footer>
 </body>
 </html>

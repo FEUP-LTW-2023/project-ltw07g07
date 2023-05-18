@@ -66,7 +66,7 @@ if (isset($_POST['login'])) {
 ?>
 
   <footer>
-    Trouble Ticket
+  &copy; Trouble Ticket
   </footer>
   </body>
 </html>

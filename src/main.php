@@ -79,7 +79,7 @@ $departments = $stmt->fetchAll();
     <h1><a href="main.php">Trouble Ticket Handler</a></h1>
 </header>
 
-<h1 class="main">MAIN PAGE</h1>
+<a href="login.php" class="a-prof">Logout</a>
 
 <ul id="menu">
     <a href="ticket.php">
@@ -98,7 +98,6 @@ $departments = $stmt->fetchAll();
     </ul>
 </nav>
 
-<a href="login.php" class="a-prof">Logout</a>
 
 <?php foreach ($tickets as $ticket): ?>
   <div id="ticket">
@@ -134,7 +133,7 @@ $departments = $stmt->fetchAll();
 
 
 <footer>
-   Trouble Ticket
+&copy; Trouble Ticket
 </footer>
 </body>
 </html>
