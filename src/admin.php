@@ -129,19 +129,19 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
     <option value="<?php echo $deparment['name']; ?>"> <?php echo $deparment['name']; ?> </option>
     <?php endforeach; ?>
   </select>
+  
+  <label for="sort">Sort by:</label>
+  <select id="sort" name="sort">
+    <option value="">Date</option>
+    <option value="">Status</option>
+    <option value="">Priority</option>
+    <option value="">Assigned Agent</option>
+    <option value="">Hashtag</option>
+  </select>
   <input type="submit" value="Submit">
 </form>
 
 
-
-<label for="sort">Sort by:</label>
-<select id="sort" name="sort">
-  <option value="">Date</option>
-  <option value="">Status</option>
-  <option value="">Priority</option>
-  <option value="">Assigned Agent</option>
-  <option value="">Hashtag</option>
-</select>
 
 <section id = "tickets">
 
