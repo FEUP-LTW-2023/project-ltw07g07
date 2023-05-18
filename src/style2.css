@@ -256,13 +256,16 @@ a#reply-link {
   font-size: 18px;
   font-weight: bold;
   margin-left: 80px;
+
 }
 
 #reply {
+  background-color: #fff;
   display: block;
   border: 2px solid black;
   padding: 10px;
   margin-left: 50px;
+  margin-right: 30px;
   margin-bottom: 20px;
 }
 
