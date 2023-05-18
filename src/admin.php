@@ -145,17 +145,13 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
     </ul>
 </nav>
 
-<!--
-<nav id="menu">
-    <ul>
-        <li><a href="#" onclick="showDep1()">Accounting</a></li>
-        <li><a href="#" onclick="showDep2()">Sales</a></li>
-        <li><a href="#" onclick="showDep3()">Support</a></li>
-    </ul>
-</nav>
--->
 
 <a href="login.php" class="a-prof">Logout</a>
+
+<label for="sort">Sort by:</label>
+<select id="sort" name="sort">
+  <option value=""></option>
+</select>
 
 <section id = "tickets">
 

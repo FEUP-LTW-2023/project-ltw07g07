@@ -36,9 +36,21 @@ if (isset($_POST['submit_ticket'])) {
 
   $stmt->execute();
 
-  header('Location: main.php');
+  if ($user['status'] == 'Agent'){
+    header('Location: agent.php');
+  }
+  else if ($user['status'] == 'Admin'){
+    header('Location: admin.php');
+  }
+  else header('Location: main.php');
   exit();
 }
+
+
+$stmt = $db->prepare("SELECT name FROM department ORDER BY id ASC");
+$stmt->execute();
+$departments = $stmt->fetchAll();
+
 
 // retrieve tickets submitted by the user
 $stmt = $db->prepare("SELECT * FROM ticket WHERE client_id = :client_id");
@@ -57,7 +69,13 @@ $tickets = $stmt->fetchAll();
   </head>
 
   <header>
-    <h1> <a href="main.php"> Trouble Ticket Handler </a></h1>
+    <?php  if ($user['status'] == 'Admin'): ?>
+        <h1><a href="admin.php">Trouble Ticket Handler</a></h1>
+    <?php  elseif ($user['status'] == 'Agent'): ?>
+        <h1><a href="agent.php">Trouble Ticket Handler</a></h1>
+    <?php else: ?>
+        <h1><a href="main.php">Trouble Ticket Handler</a></h1>
+    <?php endif; ?>
   </header>
 
   <form action="" method="POST">
@@ -66,9 +84,9 @@ $tickets = $stmt->fetchAll();
     <label for="department">Department:</label>
     <select id="department" name="department">
       <option value="">Select department</option>
-      <option value="accounting">Accounting</option>
-      <option value="sales">Sales</option>
-      <option value="support">Support</option>
+      <?php foreach ($departments as $deparment): ?>
+        <option><?php echo $deparment['name']; ?>
+      <?php endforeach; ?>
     </select>
     <br>
     

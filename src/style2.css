@@ -10,6 +10,7 @@ header {
   color: #fff;
   padding: 20px;
   text-align: center;
+  margin-bottom: 30px;
 }
 
 h1 a {
@@ -121,6 +122,7 @@ input[type="submit"] {
   font-weight: bold;
   color: gray;
   background-color: rgba(144, 158, 54, 0.47);
+  margin-bottom: 20px;
 }
 
 form textarea,
@@ -203,18 +205,12 @@ nav ul li {
   border-right: 1px solid black;
 }
 
-nav ul li:first-child {
-  background-color: rgb(71, 144, 77);
-}
 
-nav ul li:nth-child(2) {
+
+nav ul li {
   background-color: rgb(28, 79, 28);
 }
 
-nav ul li:last-child {
-  border-right: none;
-  background-color: darkslategrey;
-}
 
 nav ul li a {
   display: block;

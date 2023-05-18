@@ -49,6 +49,14 @@ $stmt = $db->prepare("SELECT message, ticket_id, name FROM reply, user
                        ORDER BY reply.id ASC");
 $stmt->execute();
 $replies = $stmt->fetchAll();
+
+
+$stmt = $db->prepare("SELECT name FROM department ORDER BY id ASC");
+$stmt->execute();
+$departments = $stmt->fetchAll();
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -84,9 +92,9 @@ $replies = $stmt->fetchAll();
 
 <nav id="menu">
     <ul>
-        <li><a href="#" onclick="showDep1()">Accounting</a></li>
-        <li><a href="#" onclick="showDep2()">Sales</a></li>
-        <li><a href="#" onclick="showDep3()">Support</a></li>
+        <?php foreach ($departments as $deparment): ?>
+        <li><a href="#" onclick="showDep('<?php echo $deparment['name']; ?>')"> <?php echo $deparment['name']; ?></a></li>
+        <?php endforeach; ?>
     </ul>
 </nav>
 

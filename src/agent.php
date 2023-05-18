@@ -47,10 +47,30 @@ $stmt->execute();
 $replies = $stmt->fetchAll();
 
 
+$stmt = $db->prepare("SELECT name FROM department ORDER BY id ASC");
+$stmt->execute();
+$departments = $stmt->fetchAll();
+
 function closeTicket($idTicket){
     $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' where ticket_id = :ticket_id");
     $stmt->bindParam(':ticket_id', $idTicket);
     $stmt->execute();
+}
+
+function showDepEach($dep){
+  global $db;
+  global $tickets;
+  $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+  FROM ticket
+  JOIN user where ticket.client_id = user.id and ticket.department = :dep");
+  $stmt->bindParam(':dep', $dep);
+  $stmt->execute();
+  $tickets = $stmt->fetchAll();
+}
+
+
+if ($_GET['function'] === 'showDepEach') {
+  showDepEach($_GET['dep']);
 }
 ?>
 
@@ -64,6 +84,20 @@ function closeTicket($idTicket){
     <script>
         function showForm(ticketId) {
             document.getElementById("reply-" + ticketId).style.display = "block";
+        }
+
+        function showDep(department){
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                  var result = xhr.responseText;
+                  console.log(result);
+                  document.documentElement.innerHTML = result;
+                  
+              }
+          };
+          xhr.open('GET', 'agent.php?function=showDepEach&dep=' + encodeURIComponent(department) , true);
+          xhr.send();
         }
 
     </script>
@@ -87,13 +121,18 @@ function closeTicket($idTicket){
 
 <nav id="menu">
     <ul>
-        <li><a href="#" onclick="showDep1()">Accounting</a></li>
-        <li><a href="#" onclick="showDep2()">Sales</a></li>
-        <li><a href="#" onclick="showDep3()">Support</a></li>
+        <?php foreach ($departments as $deparment): ?>
+        <li><a href="#" onclick="showDep('<?php echo $deparment['name']; ?>')"> <?php echo $deparment['name']; ?></a></li>
+        <?php endforeach; ?>
     </ul>
 </nav>
 
 <a href="login.php" class="a-prof">Logout</a>
+
+<label for="sort">Sort by:</label>
+<select id="sort" name="sort">
+  <option value=""></option>
+</select>
 
 <?php foreach ($tickets as $ticket): ?>
   <div id="ticket">

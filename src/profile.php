@@ -54,11 +54,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </head>
 
   <header>
-    <?php if ($user['status'] == 'Agent'): ?>
+    <?php  if ($user['status'] == 'Admin'): ?>
+        <h1><a href="admin.php">Trouble Ticket Handler</a></h1>
+        
+    <?php elseif ($user['status'] == 'Agent'): ?>
         <h1><a href="agent.php">Trouble Ticket Handler</a></h1>
+        
     <?php else: ?>
         <h1><a href="main.php">Trouble Ticket Handler</a></h1>
     <?php endif; ?>
+    
 </header>
 
 
