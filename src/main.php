@@ -85,13 +85,6 @@ $departments = $stmt->fetchAll();
     </a>
 </ul>
 
-<nav id="menu">
-    <ul>
-        <?php foreach ($departments as $deparment): ?>
-        <li><a href="#" onclick="showDep('<?php echo $deparment['name']; ?>')"> <?php echo $deparment['name']; ?></a></li>
-        <?php endforeach; ?>
-    </ul>
-</nav>
 
 
 <?php foreach ($tickets as $ticket): ?>
