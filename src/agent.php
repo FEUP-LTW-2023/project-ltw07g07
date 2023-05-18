@@ -81,26 +81,7 @@ if ($_GET['function'] === 'showDepEach') {
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
 
-    <script>
-        function showForm(ticketId) {
-            document.getElementById("reply-" + ticketId).style.display = "block";
-        }
-
-        function showDep(department){
-          var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = function() {
-              if (xhr.readyState === 4 && xhr.status === 200) {
-                  var result = xhr.responseText;
-                  console.log(result);
-                  document.documentElement.innerHTML = result;
-                  
-              }
-          };
-          xhr.open('GET', 'agent.php?function=showDepEach&dep=' + encodeURIComponent(department) , true);
-          xhr.send();
-        }
-
-    </script>
+    <script src = "script.js"></script>
 </head>
 
 <body>

@@ -95,26 +95,7 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
 
-    <script>
-        function showForm(ticketId) {
-          document.getElementById("reply-" + ticketId).style.display = "block";
-        }
-
-        function showDep(department){
-          var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = function() {
-              if (xhr.readyState === 4 && xhr.status === 200) {
-                  var result = xhr.responseText;
-                  console.log(result);
-                  document.documentElement.innerHTML = result;
-                  
-              }
-          };
-          xhr.open('GET', 'admin.php?function=showDepEach&dep=' + encodeURIComponent(department) , true);
-          xhr.send();
-        }
-        //'admin.php?function=showDepEach&dep='
-    </script>
+    <script src = "script.js"></script>
 </head>
 
 <body>
@@ -178,7 +159,7 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
   endforeach; ?>
 
 
-  <a href="#" class="reply-ticket" onclick="showForm(<?= $ticket['ticket_id'] ?>)">Reply</a>
+  <a href="#" class="reply-ticket" onclick="showFormReply(<?= $ticket['ticket_id'] ?>)">Reply</a>
   <form id="reply-<?= $ticket['ticket_id'] ?>" style="display: none;" action="" method="post">
     <label for="message">Message:</label>
     <textarea id="message" name="message" rows="5" required></textarea>

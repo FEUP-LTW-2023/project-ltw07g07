@@ -66,12 +66,7 @@ $departments = $stmt->fetchAll();
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
 
-    <script>
-        function showForm(ticketId) {
-            document.getElementById("reply-" + ticketId).style.display = "block";
-        }
-
-    </script>
+    <script src = "script.js"></script>
 </head>
 
 <body>

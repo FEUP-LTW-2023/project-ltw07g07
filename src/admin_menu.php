@@ -47,14 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Trouble Ticket Handler</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
-    <script>
-        function showForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
-        function showFormRem() {
-            document.getElementById("myForm2").style.display = "block";
-        }
-    </script>
+    <script src = "script.js"></script>
 
 </head>
 
@@ -71,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
   endforeach; ?>
 
-<a href="#" class = "a-prof" onclick="showForm()">Add Department</a>
+<a href="#" class = "a-prof" onclick="showFormDep()">Add Department</a>
 <form id="myForm" style="display: none;" action="" method="post">
         <label for="name">Department:</label>
         <input type="text" id="name" name="name"><br>

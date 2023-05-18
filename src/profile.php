@@ -46,11 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title> Profile </title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
-    <script>
-        function showForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
-    </script>
+    <script src = "script.js"></script>
   </head>
 
   <header>
@@ -73,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p class = "p-prof"> Username: <?=$user['username']?> </p> 
     <p class = "p-prof"> Email: <?=$user['email']?> </p>
 
-    <a href="#" class = "a-prof" onclick="showForm()">Edit profile</a>
+    <a href="#" class = "a-prof" onclick="showFormProfile()">Edit profile</a>
     <form id="myForm" style="display: none;" action="" method="post">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name"><br>
