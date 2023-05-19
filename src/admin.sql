@@ -5,7 +5,8 @@ CREATE TABLE user (
   name TEXT NOT NULL,
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
-  email TEXT NOT NULL
+  email TEXT NOT NULL,
+  department TEXT
 );
 
 DROP TABLE IF EXISTS department;
@@ -13,9 +14,6 @@ CREATE TABLE department (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL UNIQUE
 );
-
-
-
 
 DROP TABLE IF EXISTS ticket;
 CREATE TABLE ticket (
@@ -31,7 +29,6 @@ CREATE TABLE ticket (
   FOREIGN KEY (assigned_to) REFERENCES users(id)
 );
 
-
 DROP TABLE IF EXISTS faq;
 CREATE TABLE faq (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,7 +36,6 @@ CREATE TABLE faq (
   message TEXT NOT NULL,
   FOREIGN KEY (client_id) REFERENCES users(id)
 );
-
 
 DROP TABLE IF EXISTS reply;
 CREATE TABLE reply (
