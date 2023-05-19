@@ -54,9 +54,14 @@ $departments = $stmt->fetchAll();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $dep = $_POST["department"];
-  $option = $_POST["sort"];
-  showDepEach($dep, $option);
+  if (isset($_POST["department"]) && isset($_POST["sort"])) {
+    $dep = $_POST["department"];
+    $option = $_POST["sort"];
+    showDepEach($dep, $option);
+  } else if (isset($_POST["idTicket"])) {
+    $idTicket = $_POST['idTicket'];
+    closeTicket($idTicket);
+  }
 }
 
 
@@ -139,7 +144,7 @@ if ($_GET['function'] === 'showDepEach') {
 
 
 if ($_GET['function'] === 'closeTicket') {
-  closeTicket($_GET['id']);
+  closeTicket($_GET['idTicket']);
 }
 
 ?>
@@ -207,7 +212,10 @@ if ($_GET['function'] === 'closeTicket') {
     <p><?= $ticket['dep'] ?></p>
     <p><?= $ticket['priority']. " Priority" ?></p>
     <p><?= $ticket['status'] ?></p>
-    <a href="#" onclick = "closeTicket(<?= $ticket['id'] ?>)" > Close ticket </a>
+    <form action = "" method = "POST">
+      <input type = "hidden" name = "idTicket" value = <?= $ticket['ticket_id'] ?>>
+      <input type = "submit" value = "Close ticket">
+    </form>
   </div>
 
 
