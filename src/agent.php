@@ -53,15 +53,21 @@ $stmt->execute();
 $departments = $stmt->fetchAll();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $dep = $_POST["department"];
-  $option = $_POST["sort"];
-  showDepEach($dep, $option);
+  if (isset($_POST["department"]) && isset($_POST["sort"])) {
+    $dep = $_POST["department"];
+    $option = $_POST["sort"];
+    showDepEach($dep, $option);
+  } else if (isset($_POST["idTicket"])) {
+    $idTicket = $_POST['idTicket'];
+    closeTicket($idTicket);
+  }
 }
 
 function closeTicket($idTicket){
-    $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' where ticket_id = :ticket_id");
-    $stmt->bindParam(':ticket_id', $idTicket);
-    $stmt->execute();
+  global $db;
+  $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' WHERE id = :ticket_id");
+  $stmt->bindParam(':ticket_id', $idTicket);
+  $stmt->execute();
 }
 
 function showDepEach($dep, $option){
@@ -133,6 +139,10 @@ function showDepEach($dep, $option){
 if ($_GET['function'] === 'showDepEach') {
   showDepEach($_GET['dep'], $_GET['option']);
 }
+
+if ($_GET['function'] === 'closeTicket') {
+  closeTicket($_GET['idTicket']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -183,6 +193,8 @@ if ($_GET['function'] === 'showDepEach') {
   <input type="submit" value="Submit">
 </form>
 
+<section id = "tickets">
+
 <?php foreach ($tickets as $ticket): ?>
   <div id="ticket">
   <h2><?= $ticket['client_name'] ?></h2>
@@ -190,7 +202,10 @@ if ($_GET['function'] === 'showDepEach') {
     <p><?= $ticket['dep'] ?></p>
     <p><?= $ticket['priority']. " Priority" ?></p>
     <p><?= $ticket['status'] ?></p>
-    <a href="#" onclick = "closeTicket(<?= $ticket['ticket_id'] ?>)"> Close ticket </a>
+    <form action = "" method = "POST">
+      <input type = "hidden" name = "idTicket" value = <?= $ticket['ticket_id'] ?>>
+      <input type = "submit" value = "Close ticket">
+    </form>
   </div>
 
 
@@ -218,9 +233,10 @@ if ($_GET['function'] === 'showDepEach') {
     <p> AGENTE </p>
   </div>
 
+</section>
 
-<footer>
-   &copy; Trouble Ticket
-</footer>
+  <footer>
+    &copy; Trouble Ticket
+  </footer>
 </body>
 </html>

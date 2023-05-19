@@ -64,8 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-
-
 function closeTicket($idTicket){
     global $db;
     $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' WHERE id = :ticket_id");
@@ -142,7 +140,6 @@ if ($_GET['function'] === 'showDepEach') {
   showDepEach($_GET['dep'], $_GET($option));
 }
 
-
 if ($_GET['function'] === 'closeTicket') {
   closeTicket($_GET['idTicket']);
 }
@@ -201,8 +198,6 @@ if ($_GET['function'] === 'closeTicket') {
   <input type="submit" value="Submit">
 </form>
 
-
-
 <section id = "tickets">
 
 <?php foreach ($tickets as $ticket): ?>
@@ -244,7 +239,6 @@ if ($_GET['function'] === 'closeTicket') {
   </div>
 
 </section>
-
 
 <footer>
 &copy; Trouble Ticket
