@@ -13,7 +13,7 @@ $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
 
-$stmt = $db->prepare("SELECT * FROM user WHERE status = 'Agent'");
+$stmt = $db->prepare("SELECT * FROM user WHERE status = 'Agent' or status = 'Admin'");
 $stmt->execute();
 $agents = $stmt->fetchAll();
 
@@ -247,12 +247,7 @@ if ($_GET['function'] === 'assignAgent') {
         <option value="<?php echo $agent['name']; ?>"> <?php echo $agent['name']; ?> </option>
         <?php endforeach; ?>
       </select>
-      <select name="id_t">
-      <option value = "none"> None </option>
-      <?php foreach ($tickets as $ticket): ?>
-        <option value="<?php echo $ticket['ticket_id']; ?>"> <?php echo $ticket['ticket_id']; ?> </option>
-        <?php endforeach; ?>
-      </select>
+      <input type = "hidden" name = "id_t" value = <?= $ticket['ticket_id']?>>
       <input type="submit" name = "assign" value="Assign">
     </form>
 

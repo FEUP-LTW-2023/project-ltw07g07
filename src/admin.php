@@ -13,6 +13,10 @@ $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
 
+$stmt = $db->prepare("SELECT * FROM user WHERE status = 'Agent' or status = 'Admin'");
+$stmt->execute();
+$agents = $stmt->fetchAll();
+
 if ($user['status'] != 'Admin'){
   header('Location: login.php');
   exit();
@@ -62,6 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idTicket = $_POST['idTicket'];
     closeTicket($idTicket);
   }
+  else if (isset($_POST["agent"])) {
+    $agent = $_POST["agent"];
+    $id_t = $_POST["id_t"];
+    assignAgent($agent, $id_t);
+  }
 }
 
 function closeTicket($idTicket){
@@ -69,6 +78,24 @@ function closeTicket($idTicket){
     $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' WHERE id = :ticket_id");
     $stmt->bindParam(':ticket_id', $idTicket);
     $stmt->execute();
+}
+
+function assignAgent($agent, $id){
+  global $db;
+  
+  $stmt = $db->prepare("SELECT id FROM user WHERE name = :_name");
+  $stmt->bindParam(':_name', $agent);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  
+  if ($result) {
+    $agent_id = $result['id'];
+    
+    $stmt = $db->prepare("UPDATE ticket SET assigned_to = :agent_id WHERE id = :ticket_id");
+    $stmt->bindParam(':agent_id', $agent_id);
+    $stmt->bindParam(':ticket_id', $id);
+    $stmt->execute();
+  }
 }
 
 function showDepEach($dep, $option){
@@ -144,6 +171,10 @@ if ($_GET['function'] === 'closeTicket') {
   closeTicket($_GET['idTicket']);
 }
 
+if ($_GET['function'] === 'assignAgent') {
+  assignAgent($_GET['agent'], $_GET['id_t']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -202,11 +233,27 @@ if ($_GET['function'] === 'closeTicket') {
 
 <?php foreach ($tickets as $ticket): ?>
   <div id="ticket">
-    <h2><?= $ticket['client_name'] ?></h2>
-    <p><?= $ticket['message'] ?></p>
-    <p><?= $ticket['dep'] ?></p>
-    <p><?= $ticket['priority']. " Priority" ?></p>
-    <p><?= $ticket['status'] ?></p>
+  <h2><?= $ticket['client_name'] ?></h2>
+
+    <div class = "ticket-info">
+      <p><?= $ticket['message'] ?></p>
+      <p><?= $ticket['dep'] ?></p>
+      <p><?= $ticket['priority']. " Priority" ?></p>
+      <p><?= $ticket['status'] ?></p>
+    </div>
+
+    <form action="" method="post" class = "assign">
+      <label for="assign">Assign Agent:</label>
+      <select name="agent">
+      <option value = "none"> None </option>
+      <?php foreach ($agents as $agent): ?>
+        <option value="<?php echo $agent['name']; ?>"> <?php echo $agent['name']; ?> </option>
+        <?php endforeach; ?>
+      </select>
+      <input type = "hidden" name = "id_t" value = <?= $ticket['ticket_id']?>>
+      <input type="submit" name = "assign" value="Assign">
+    </form>
+
     <form action = "" method = "POST">
       <input type = "hidden" name = "idTicket" value = <?= $ticket['ticket_id'] ?>>
       <input type = "submit" value = "Close ticket">
