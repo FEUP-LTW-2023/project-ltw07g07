@@ -248,21 +248,21 @@ div#ticket p {
   padding-bottom: 10px;
 }
 
-div#ticket p:nth-child(5) {  
+div#ticket p:nth-child(4) {  
   border: 2px solid #4b3980;
   background-color: #4b39805a;
 }
 
-div#ticket p:nth-child(2) {
+div#ticket p:nth-child(1) {
   border-bottom: 2px solid #836e6e;
   margin-right: 300px;
 }
 
-div#ticket p:nth-child(3) {
+div#ticket p:nth-child(2) {
   border: 2px solid #844844;
 }
 
-div#ticket p:nth-child(4) {
+div#ticket p:nth-child(3) {
   border: 2px solid #32964d;
   background-color: #32964d5a;
 }
