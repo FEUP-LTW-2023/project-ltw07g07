@@ -48,6 +48,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':department', $department);
     $stmt->bindParam(':name', $name);
     $stmt->execute();
+    header('Location: admin_menu.php');
+    exit();
+    
+  }
+  elseif (isset($_POST['user'])) {
+    $role = $_POST['role'];
+    $name = $_POST['id'];
+    $stmt = $db->prepare("UPDATE user SET status = :status WHERE id = :id");
+    $stmt->bindParam(':status', $role);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    header('Location: admin_menu.php');
+    exit();
   }
 }
 
@@ -89,8 +102,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type = "hidden" name = "name" value = <?= $user['id']?>>
           <input type="submit" name="assign" value="Assign">
         </form>
-      </div>
+
       <?php } ?>
+      <form action="" method="post">
+          <label for="role">Role:</label>
+          <select name="role">
+            <?php foreach (array('Client', 'Agent', 'Admin') as $role): ?>
+              <option value="<?php echo $role; ?>"> <?php echo $role; ?> </option>
+            <?php endforeach; ?>
+          </select>
+          <input type="hidden" name="user" value="<?= $user['id'] ?>">
+          <input type="submit" name="upgrade" value="Upgrade">
+      </form>
+
+      
+      </div>
   </div>
     <?php
   endforeach; ?>

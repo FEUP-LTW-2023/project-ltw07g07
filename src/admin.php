@@ -83,6 +83,8 @@ function closeTicket($idTicket){
     $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' WHERE id = :ticket_id");
     $stmt->bindParam(':ticket_id', $idTicket);
     $stmt->execute();
+    header('Location: admin.php');
+    exit();
 }
 
 function assignAgent($agent, $id){
@@ -101,6 +103,8 @@ function assignAgent($agent, $id){
     $stmt->bindParam(':ticket_id', $id);
     $stmt->execute();
   }
+  header('Location: admin.php');
+  exit();
 }
 
 function showDepEach($dep, $option){
@@ -174,6 +178,8 @@ function changeDep($id_ttt, $change){
   $stmt->bindParam(':new', $change);
   $stmt->bindParam(':ticket_id', $id_ttt);
   $stmt->execute();
+  header('Location: admin.php');
+  exit();
 }
 
 if ($_GET['function'] === 'showDepEach') {
