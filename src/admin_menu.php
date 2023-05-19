@@ -52,12 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
     
   }
-  elseif (isset($_POST['user'])) {
+  elseif (isset($_POST['upgrade'])) {
     $role = $_POST['role'];
-    $name = $_POST['id'];
-    $stmt = $db->prepare("UPDATE user SET status = :status WHERE id = :id");
+    $name = $_POST['name'];
+    $stmt = $db->prepare("UPDATE user SET status = :status WHERE id = :name");
     $stmt->bindParam(':status', $role);
-    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':name', $name);
     $stmt->execute();
     header('Location: admin_menu.php');
     exit();
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <option value="<?php echo $role; ?>"> <?php echo $role; ?> </option>
             <?php endforeach; ?>
           </select>
-          <input type="hidden" name="user" value="<?= $user['id'] ?>">
+          <input type = "hidden" name = "name" value = <?= $user['id']?>>
           <input type="submit" name="upgrade" value="Upgrade">
       </form>
 
