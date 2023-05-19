@@ -52,7 +52,7 @@ $stmt->execute();
 $replies = $stmt->fetchAll();
 
 
-$stmt = $db->prepare("SELECT name FROM department ORDER BY id ASC");
+$stmt = $db->prepare("SELECT name, id FROM department ORDER BY id ASC");
 $stmt->execute();
 $departments = $stmt->fetchAll();
 
@@ -66,10 +66,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idTicket = $_POST['idTicket'];
     closeTicket($idTicket);
   }
-  else if (isset($_POST["agent"])) {
+  else if (isset($_POST["agent"]) && isset($_POST["id_t"])) {
     $agent = $_POST["agent"];
     $id_t = $_POST["id_t"];
     assignAgent($agent, $id_t);
+  }
+  else if (isset($_POST["id_ttt"]) && isset($_POST["depChange"])) {
+    $id_ttt = $_POST['id_ttt'];
+    $change = $_POST['depChange'];
+    changeDep($id_ttt, $change);
   }
 }
 
@@ -163,6 +168,14 @@ function showDepEach($dep, $option){
   }
 }
 
+function changeDep($id_ttt, $change){
+  global $db;
+  $stmt = $db->prepare("UPDATE ticket SET department = :new WHERE id = :ticket_id");
+  $stmt->bindParam(':new', $change);
+  $stmt->bindParam(':ticket_id', $id_ttt);
+  $stmt->execute();
+}
+
 if ($_GET['function'] === 'showDepEach') {
   showDepEach($_GET['dep'], $_GET($option));
 }
@@ -173,6 +186,10 @@ if ($_GET['function'] === 'closeTicket') {
 
 if ($_GET['function'] === 'assignAgent') {
   assignAgent($_GET['agent'], $_GET['id_t']);
+}
+
+if ($_GET['function'] === 'changeDep') {
+  assignAgent($_GET['id_ttt'], $_GET['depChange']);
 }
 
 ?>
@@ -252,6 +269,18 @@ if ($_GET['function'] === 'assignAgent') {
       </select>
       <input type = "hidden" name = "id_t" value = <?= $ticket['ticket_id']?>>
       <input type="submit" name = "assign" value="Assign">
+    </form>
+
+    <form action = "" method = "post" class = "change">
+      <label for ="change"> Change department: </label>
+      <select name = "depChange">
+        <option value = "none"> None </option>
+        <?php foreach ($departments as $department):?>
+          <option value = "<?php echo $department['name']; ?>"> <?php echo $department['name']; ?> </option>
+        <?php endforeach; ?>
+      </select>
+      <input type = "hidden" name = "id_ttt" value = <?= $ticket['ticket_id']?>>
+      <input type = "submit" name = "change" value = "Change">
     </form>
 
     <form action = "" method = "POST">

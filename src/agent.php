@@ -52,7 +52,7 @@ $stmt->execute();
 $replies = $stmt->fetchAll();
 
 
-$stmt = $db->prepare("SELECT name FROM department ORDER BY id ASC");
+$stmt = $db->prepare("SELECT name, id FROM department ORDER BY id ASC");
 $stmt->execute();
 $departments = $stmt->fetchAll();
 
