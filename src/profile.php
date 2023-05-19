@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p class = "p-prof"> Email: <?=$user['email']?> </p>
 
     <a href="#" class = "a-prof" onclick="showFormProfile()">Edit profile</a>
-    <form id="myForm" style="display: none;" action="" method="post">
+    <form id="myForm" style="display: none;" action="#" method="post">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name"><br>
         <label for="username">Username:</label>

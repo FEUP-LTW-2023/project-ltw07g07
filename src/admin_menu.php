@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php if($user['status']== 'Agent' or $user['status']== 'Admin'){ ?>
       <div id = "assign-agent">
       
-        <form action="" method="post">
+        <form action="#" method="post">
           <label for="department">Department:</label>
           <select name="department">
             <option value = "none"> None </option>
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
       <?php } ?>
-      <form action="" method="post">
+      <form action="#" method="post">
           <label for="role">Role:</label>
           <select name="role">
             <?php foreach (array('Client', 'Agent', 'Admin') as $role): ?>
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   endforeach; ?>
 
 <a href="#" class = "dep-ar" onclick="showFormDep()">Add Department</a>
-<form id="myForm" style="display: none;" action="" method="post">
+<form id="myForm" style="display: none;" action="#" method="post">
         <label for="name">Department:</label>
         <input type="text" id="name" name="name"><br>
         <input type="submit" name="add" value="Add">
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <a href="#" class = "dep-ar" onclick="showFormRem()">Remove Department</a>
-<form id="myForm2" style="display: none;" action="" method="post">
+<form id="myForm2" style="display: none;" action="#" method="post">
         <label for="name">Department:</label>
         <input type="text" id="name" name="name"><br>
         <input type="submit" name="remove" value="Remove">

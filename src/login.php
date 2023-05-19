@@ -12,7 +12,7 @@
     <h1> Trouble Ticket Handler </h1>
   </header>
 
-  <form action="" method="POST">
+  <form action="#" method="POST">
   <label for="username">Username:</label>
   <input type="text" id="username" name="username" required>
 
