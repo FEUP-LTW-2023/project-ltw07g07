@@ -62,7 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 function closeTicket($idTicket){
-    $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' where ticket_id = :ticket_id");
+    global $db;
+    $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' WHERE id = :ticket_id");
     $stmt->bindParam(':ticket_id', $idTicket);
     $stmt->execute();
 }
@@ -136,6 +137,11 @@ if ($_GET['function'] === 'showDepEach') {
   showDepEach($_GET['dep'], $_GET($option));
 }
 
+
+if ($_GET['function'] === 'closeTicket') {
+  closeTicket($_GET['id']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -201,7 +207,7 @@ if ($_GET['function'] === 'showDepEach') {
     <p><?= $ticket['dep'] ?></p>
     <p><?= $ticket['priority']. " Priority" ?></p>
     <p><?= $ticket['status'] ?></p>
-    <a href="#" onclick = "closeTicket(<?= $ticket['ticket_id'] ?>)"> Close ticket </a>
+    <a href="#" onclick = "closeTicket(<?= $ticket['id'] ?>)" > Close ticket </a>
   </div>
 
 
