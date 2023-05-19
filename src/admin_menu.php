@@ -13,6 +13,10 @@ $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
 
+$stmt = $db->prepare("SELECT name FROM department ORDER BY id ASC");
+$stmt->execute();
+$departments = $stmt->fetchAll();
+
 if ($user['status'] != 'Admin'){
   header('Location: login.php');
   exit();
@@ -36,6 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':name', $name);
     $stmt->execute();
   }
+
+  elseif (isset($_POST['assign'])) {
+    $department = $_POST['department'];
+    $name = $_POST['name'];
+    $stmt = $db->prepare("UPDATE user SET department = :department WHERE id = :name");
+    $stmt->bindParam(':department', $department);
+    $stmt->bindParam(':name', $name);
+    $stmt->execute();
+  }
 }
 
 ?>
@@ -56,10 +69,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </header>
 
 <?php foreach ($users as $user): ?>
+  <div id = "user_prof">
       <div id = "user">
         <h3><?= $user['name'] ?></h3>
         <p><?= $user['status'] ?></p>
+        <p><?= $user['department'] ?></p>
       </div>
+      <div id = "assign-agent">
+      
+        <form action="" method="post">
+          <label for="name">Department:</label>
+          <select name="department">
+            <option value = "none"> None </option>
+            <?php foreach ($departments as $department): ?>
+              <option value="<?php echo $department['name']; ?>"> <?php echo $department['name']; ?> </option>
+            <?php endforeach; ?>
+          </select>
+          <input type="submit" name="assign" value="Assign">
+        </form>
+      </div>
+  </div>
     <?php
   endforeach; ?>
 

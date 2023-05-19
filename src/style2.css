@@ -248,11 +248,6 @@ div#ticket p {
   padding-bottom: 10px;
 }
 
-div#ticket p:nth-child(4) {  
-  border: 2px solid #4b3980;
-  background-color: #4b39805a;
-}
-
 div#ticket p:nth-child(1) {
   border-bottom: 2px solid #836e6e;
   margin-right: 300px;
@@ -266,6 +261,12 @@ div#ticket p:nth-child(3) {
   border: 2px solid #32964d;
   background-color: #32964d5a;
 }
+
+div#ticket p:nth-child(4) {  
+  border: 2px solid #4b3980;
+  background-color: #4b39805a;
+}
+
 
 a#reply-link {
   display: block;
@@ -310,10 +311,12 @@ a#reply-link {
 
 #user {
   background-color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin-left: 30px;
 }
 
 #user h3 {
@@ -329,8 +332,8 @@ a#reply-link {
 /* Updated CSS to display status below the name */
 
 #user {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction:column;
   align-items: left;
 }
 
@@ -342,7 +345,18 @@ a#reply-link {
   margin: 0;
   font-size: 14px;
   color: #777;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
+#assign-agent{
+  display: inline-flex;
+  margin-left: auto;
+  
+}
+
+#user_prof{
+  display: block;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
 
