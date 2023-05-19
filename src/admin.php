@@ -18,7 +18,8 @@ if ($user['status'] != 'Admin'){
   exit();
 }
 
-$stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+$stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id,
+                      ticket.priority
                       FROM ticket
                       JOIN user ON ticket.client_id = user.id");
 $stmt->execute();
@@ -54,7 +55,8 @@ $departments = $stmt->fetchAll();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $dep = $_POST["department"];
-  showDepEach($dep);
+  $option = $_POST["sort"];
+  showDepEach($dep, $option);
 }
 
 
@@ -65,39 +67,74 @@ function closeTicket($idTicket){
     $stmt->execute();
 }
 
-function showDepEach($dep){
+function showDepEach($dep, $option){
   global $db;
   global $tickets;
   if ($dep == "all"){
-    $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-    FROM ticket
-    JOIN user where ticket.client_id = user.id");
-    $stmt->execute();
-    $tickets = $stmt->fetchAll();
+    if ($option == "date"){
+      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+      ,ticket.priority
+      FROM ticket
+      JOIN user where ticket.client_id = user.id");
+      $stmt->execute();
+      $tickets = $stmt->fetchAll();
+    }
+    else if ($option == "status"){
+      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+      ,ticket.priority
+      FROM ticket
+      JOIN user where ticket.client_id = user.id
+      ORDER BY CASE WHEN ticket.status = 'Open' THEN 0 ELSE 1 END");
+      $stmt->execute();
+      $tickets = $stmt->fetchAll();
+    }
+    else if ($option == "priority"){
+      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+      ,ticket.priority
+      FROM ticket
+      JOIN user where ticket.client_id = user.id
+      ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
+      $stmt->execute();
+      $tickets = $stmt->fetchAll();
+    }
   }
   
   else {
-    echo ("Chegou 3");
-    $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-    FROM ticket
-    JOIN user where ticket.client_id = user.id and ticket.department = :dep");
-    $stmt->bindParam(':dep', $dep);
-    $stmt->execute();
-    $tickets = $stmt->fetchAll();
+    if ($option == "date"){
+      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+      ,ticket.priority
+      FROM ticket
+      JOIN user where ticket.client_id = user.id and ticket.department = :dep");
+      $stmt->bindParam(':dep', $dep);
+      $stmt->execute();
+      $tickets = $stmt->fetchAll();
+    }
+    else if ($option == "status"){
+      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+      ,ticket.priority
+      FROM ticket
+      JOIN user where ticket.client_id = user.id and ticket.department = :dep
+      ORDER BY CASE WHEN ticket.status = 'Open' THEN 0 ELSE 1 END");
+      $stmt->bindParam(':dep', $dep);
+      $stmt->execute();
+      $tickets = $stmt->fetchAll();
+    }
+    else if ($option == "priority"){
+      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+      ,ticket.priority
+      FROM ticket
+      JOIN user where ticket.client_id = user.id and ticket.department = :dep
+      ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
+      $stmt->bindParam(':dep', $dep);
+      $stmt->execute();
+      $tickets = $stmt->fetchAll();
+    }
   }
 }
 
-
 if ($_GET['function'] === 'showDepEach') {
-  showDepEach($_GET['dep']);
+  showDepEach($_GET['dep'], $_GET($option));
 }
-
-/*
-$stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-FROM ticket
-JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
-*/
-
 
 ?>
 
@@ -144,11 +181,11 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
   
   <label for="sort">Sort by:</label>
   <select id="sort" name="sort">
-    <option value="">Date</option>
-    <option value="">Status</option>
-    <option value="">Priority</option>
-    <option value="">Assigned Agent</option>
-    <option value="">Hashtag</option>
+    <option value="date">Date</option>
+    <option value="status">Status</option>
+    <option value="priority">Priority</option>
+    <option value="agent">Assigned Agent</option>
+    <option value="hashtag">Hashtag</option>
   </select>
   <input type="submit" value="Submit">
 </form>
@@ -162,6 +199,7 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
     <h2><?= $ticket['client_name'] ?></h2>
     <p><?= $ticket['message'] ?></p>
     <p><?= $ticket['dep'] ?></p>
+    <p><?= $ticket['priority']. " Priority" ?></p>
     <p><?= $ticket['status'] ?></p>
     <a href="#" onclick = "closeTicket(<?= $ticket['ticket_id'] ?>)"> Close ticket </a>
   </div>
