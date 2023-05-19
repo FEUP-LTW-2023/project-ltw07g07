@@ -91,7 +91,8 @@ $departments = $stmt->fetchAll();
   <div id="ticket">
     <h2><?= $ticket['client_name'] ?></h2>
     <p><?= $ticket['message'] ?></p>
-    <p>Status: <?= $ticket['status'] ?></p>
+    <p><?= $ticket['dep'] ?></p>
+    <p><?= $ticket['status'] ?></p>
   </div>
 
 

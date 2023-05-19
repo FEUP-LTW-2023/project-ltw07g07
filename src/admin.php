@@ -68,12 +68,23 @@ function closeTicket($idTicket){
 function showDepEach($dep){
   global $db;
   global $tickets;
-  $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-  FROM ticket
-  JOIN user where ticket.client_id = user.id and ticket.department = :dep");
-  $stmt->bindParam(':dep', $dep);
-  $stmt->execute();
-  $tickets = $stmt->fetchAll();
+  if ($dep == "all"){
+    $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+    FROM ticket
+    JOIN user where ticket.client_id = user.id");
+    $stmt->execute();
+    $tickets = $stmt->fetchAll();
+  }
+  
+  else {
+    echo ("Chegou 3");
+    $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+    FROM ticket
+    JOIN user where ticket.client_id = user.id and ticket.department = :dep");
+    $stmt->bindParam(':dep', $dep);
+    $stmt->execute();
+    $tickets = $stmt->fetchAll();
+  }
 }
 
 
@@ -125,6 +136,7 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
 <form action="" method="post">
 <label for="sort">Department:</label>
   <select name="department">
+  <option value = "all"> All </option>
   <?php foreach ($departments as $deparment): ?>
     <option value="<?php echo $deparment['name']; ?>"> <?php echo $deparment['name']; ?> </option>
     <?php endforeach; ?>
@@ -149,7 +161,8 @@ JOIN user ON ticket.client_id = user.id where ticket.department = :dep");
   <div id="ticket">
     <h2><?= $ticket['client_name'] ?></h2>
     <p><?= $ticket['message'] ?></p>
-    <p>Status: <?= $ticket['status'] ?></p>
+    <p><?= $ticket['dep'] ?></p>
+    <p><?= $ticket['status'] ?></p>
     <a href="#" onclick = "closeTicket(<?= $ticket['ticket_id'] ?>)"> Close ticket </a>
   </div>
 
