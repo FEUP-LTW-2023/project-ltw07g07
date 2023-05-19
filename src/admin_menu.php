@@ -75,19 +75,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p><?= $user['status'] ?></p>
         <p><?= $user['department'] ?></p>
       </div>
+      <?php if($user['status']== 'Agent' or $user['status']== 'Admin'){ ?>
       <div id = "assign-agent">
       
         <form action="" method="post">
-          <label for="name">Department:</label>
+          <label for="department">Department:</label>
           <select name="department">
             <option value = "none"> None </option>
             <?php foreach ($departments as $department): ?>
               <option value="<?php echo $department['name']; ?>"> <?php echo $department['name']; ?> </option>
             <?php endforeach; ?>
           </select>
+          <input type = "hidden" name = "name" value = <?= $user['id']?>>
           <input type="submit" name="assign" value="Assign">
         </form>
       </div>
+      <?php } ?>
   </div>
     <?php
   endforeach; ?>
