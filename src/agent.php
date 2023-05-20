@@ -253,8 +253,8 @@ if ($_GET['function'] === 'changeDep') {
   <div id="ticket">
   <h2><?= $ticket['client_name'] ?></h2>
 
+    <p id = "message"><?= $ticket['message'] ?></p>
     <div class = "ticket-info">
-      <p><?= $ticket['message'] ?></p>
       <p><?= $ticket['dep'] ?></p>
       <p><?= $ticket['priority']. " Priority" ?></p>
       <p><?= $ticket['status'] ?></p>
@@ -284,7 +284,7 @@ if ($_GET['function'] === 'changeDep') {
       <input type = "submit" name = "change" value = "Change">
     </form>
 
-    <form action = "" method = "POST">
+    <form action = "" method = "POST" class = "close">
       <input type = "hidden" name = "idTicket" value = <?= $ticket['ticket_id'] ?>>
       <input type = "submit" value = "Close ticket">
     </form>
@@ -301,7 +301,7 @@ if ($_GET['function'] === 'changeDep') {
   endforeach; ?>
 
 
-  <a href="#" class="reply-ticket" onclick="showForm(<?= $ticket['ticket_id'] ?>)">Reply</a>
+  <a href="#" class="reply-ticket" onclick="showFormReply(<?= $ticket['ticket_id'] ?>)">Reply</a>
   <form id="reply-<?= $ticket['ticket_id'] ?>" style="display: none;" action="" method="post">
     <label for="message">Message:</label>
     <textarea id="message" name="message" rows="5" required></textarea>

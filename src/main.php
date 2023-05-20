@@ -88,11 +88,13 @@ $departments = $stmt->fetchAll();
 
 
 <?php foreach ($tickets as $ticket): ?>
-  <div id="ticket">
+  <div id="ticket" style = "padding-bottom: 200px">
     <h2><?= $ticket['client_name'] ?></h2>
-    <p><?= $ticket['message'] ?></p>
-    <p><?= $ticket['dep'] ?></p>
-    <p><?= $ticket['status'] ?></p>
+    <p id = "message" ><?= $ticket['message'] ?></p>
+    <div class = "ticket-info" >
+      <p><?= $ticket['dep'] ?></p>
+      <p><?= $ticket['status'] ?></p>
+    </div>
   </div>
 
 
@@ -106,7 +108,7 @@ $departments = $stmt->fetchAll();
   endforeach; ?>
 
 
-  <a href="#" class="reply-ticket" onclick="showForm(<?= $ticket['ticket_id'] ?>)">Reply</a>
+  <a href="#" class="reply-ticket" onclick="showFormReply(<?= $ticket['ticket_id'] ?>)">Reply</a>
   <form id="reply-<?= $ticket['ticket_id'] ?>" style="display: none;" action="" method="post">
     <label for="message">Message:</label>
     <textarea id="message" name="message" rows="5" required></textarea>

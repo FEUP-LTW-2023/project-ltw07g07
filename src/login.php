@@ -13,14 +13,14 @@
   </header>
 
   <form action="#" method="POST">
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" required>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
 
-  <div class="button-container">
-      <input type="submit" name="login" value="Login" class = "create-link">
+    <div class="button-container">
+      <input type="submit" class = "create-link" name="login" value="Login">
       <a href="new_account.php" class="create-link">Create account</a>
     </div>
   </form>
