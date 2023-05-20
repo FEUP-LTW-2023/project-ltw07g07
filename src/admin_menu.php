@@ -81,6 +81,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1><a href="admin.php">Trouble Ticket Handler - Admin</a></h1>
 </header>
 
+<a href="#" class = "dep-ar" onclick="showFormDep()">Add Department</a>
+<form id="myForm" style="display: none;" action="#" method="post">
+        <label for="name">Department:</label>
+        <input type="text" id="name" name="name"><br>
+        <input type="submit" name="add" value="Add">
+        
+</form>
+
+<a href="#" class = "dep-ar" onclick="showFormRem()">Remove Department</a>
+<form id="myForm2" style="display: none;" action="#" method="post">
+        <label for="name">Department:</label>
+        <input type="text" id="name" name="name"><br>
+        <input type="submit" name="remove" value="Remove">
+        
+</form>
+
 <?php foreach ($users as $user): ?>
   <div id = "user_prof">
       <div id = "user">
@@ -120,22 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
     <?php
   endforeach; ?>
-
-<a href="#" class = "dep-ar" onclick="showFormDep()">Add Department</a>
-<form id="myForm" style="display: none;" action="#" method="post">
-        <label for="name">Department:</label>
-        <input type="text" id="name" name="name"><br>
-        <input type="submit" name="add" value="Add">
-        
-</form>
-
-<a href="#" class = "dep-ar" onclick="showFormRem()">Remove Department</a>
-<form id="myForm2" style="display: none;" action="#" method="post">
-        <label for="name">Department:</label>
-        <input type="text" id="name" name="name"><br>
-        <input type="submit" name="remove" value="Remove">
-        
-</form>
 
 <footer>
 &copy; Trouble Ticket

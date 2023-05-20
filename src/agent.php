@@ -22,10 +22,11 @@ if ($user['status'] != 'Agent'){
   exit();
 }
 
-$stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-                      , ticket.priority
+$stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id,
+                      ticket.priority, assigned_to_user.name as assigned_to_name
                       FROM ticket
-                      JOIN user ON ticket.client_id = user.id");
+                      INNER JOIN user as client ON ticket.client_id = client.id
+                      LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id");
 $stmt->execute();
 $tickets = $stmt->fetchAll();
 
@@ -251,13 +252,20 @@ if ($_GET['function'] === 'changeDep') {
 
 <?php foreach ($tickets as $ticket): ?>
   <div id="ticket">
-  <h2><?= $ticket['client_name'] ?></h2>
+    <h2><?= $ticket['client_name'] ?></h2>
 
     <p id = "message"><?= $ticket['message'] ?></p>
     <div class = "ticket-info">
       <p><?= $ticket['dep'] ?></p>
       <p><?= $ticket['priority']. " Priority" ?></p>
       <p><?= $ticket['status'] ?></p>
+
+      <?php if(!empty($ticket['assigned_to_name'])): ?>
+        <p><?= $ticket['assigned_to_name'] ?></p>
+      <?php else: ?>
+        <p>None</p>
+      <?php endif; ?>
+
     </div>
 
     <form action="" method="post" class = "assign">
