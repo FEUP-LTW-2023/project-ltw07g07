@@ -256,16 +256,14 @@ if ($_GET['function'] === 'changeDep') {
 
     <p id = "message"><?= $ticket['message'] ?></p>
     <div class = "ticket-info">
-      <p><?= $ticket['dep'] ?></p>
+      <p>Department: <?= $ticket['dep'] ?></p>
       <p><?= $ticket['priority']. " Priority" ?></p>
-      <p><?= $ticket['status'] ?></p>
-
+      <p>Status: <?= $ticket['status'] ?></p>
       <?php if(!empty($ticket['assigned_to_name'])): ?>
-        <p><?= $ticket['assigned_to_name'] ?></p>
+        <p>Assigned to: <?= $ticket['assigned_to_name'] ?></p>
       <?php else: ?>
-        <p>None</p>
+        <p>Assigned to: None</p>
       <?php endif; ?>
-
     </div>
 
     <form action="" method="post" class = "assign">

@@ -279,19 +279,19 @@ div#ticket p {
 
 .ticket-info p:nth-child(1) {
   border: 2px solid #844844;
-  padding-left: 50px;
+  padding-left: 40px;
 }
 
 .ticket-info p:nth-child(2) {
   border: 2px solid #32964d;
   background-color: #32964d5a;
-  padding-left: 40px;
+  padding-left: 75px;
 }
 
 .ticket-info p:nth-child(3) {  
   border: 2px solid #4b3980;
   background-color: #4b39805a;
-  padding-left: 50px;
+  padding-left: 65px;
 }
 
 .ticket-info p:nth-child(4) {  
