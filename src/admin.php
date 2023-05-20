@@ -130,7 +130,7 @@ function showDepEach($dep, $option){
       ,ticket.priority
       FROM ticket
       JOIN user where ticket.client_id = user.id
-      ORDER BY CASE WHEN ticket.status = 'Open' THEN 0 ELSE 1 END");
+      and (ticket.status = 'Open' or ticket.status = 'Assigned')");
       $stmt->execute();
       $tickets = $stmt->fetchAll();
     }
@@ -160,7 +160,7 @@ function showDepEach($dep, $option){
       ,ticket.priority
       FROM ticket
       JOIN user where ticket.client_id = user.id and ticket.department = :dep
-      ORDER BY CASE WHEN ticket.status = 'Open' THEN 0 ELSE 1 END");
+      and (ticket.status = 'Open' or ticket.status = 'Assigned')");
       $stmt->bindParam(':dep', $dep);
       $stmt->execute();
       $tickets = $stmt->fetchAll();
