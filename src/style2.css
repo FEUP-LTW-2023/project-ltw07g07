@@ -291,13 +291,13 @@ div#ticket p {
 .ticket-info p:nth-child(3) {  
   border: 2px solid #4b3980;
   background-color: #4b39805a;
-  padding-left: 60px;
+  padding-left: 50px;
 }
 
 .ticket-info p:nth-child(4) {  
   border: 2px solid #9b4646;
   background-color: #cf3b545a;
-  padding-left: 60px;
+  padding-left: 50px;
 }
 
 
@@ -369,7 +369,8 @@ a#reply-link {
   flex-direction: column;
   float: left;
   padding: 40px;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  padding-top: 20px;
   margin-right: 150px;
   margin-left: 60px;
 }
@@ -382,7 +383,7 @@ a#reply-link {
   margin: 0;
   font-size: 14px;
   color: #777;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 #assign-agent{
@@ -400,7 +401,7 @@ a#reply-link {
 #user_prof{
   display: block;
   background-color: #fff;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding-bottom: 10px;
   padding-top: 10px;
 }

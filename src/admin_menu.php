@@ -91,9 +91,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <a href="#" class = "dep-ar" onclick="showFormRem()">Remove Department</a>
 <form id="myForm2" style="display: none;" action="#" method="post">
-        <label for="name">Department:</label>
-        <input type="text" id="name" name="name"><br>
-        <input type="submit" name="remove" value="Remove">
+    <label for="name">Department:</label>
+    <select name="name">
+      <option value = "none"> None </option>
+      <?php foreach ($departments as $department): ?>
+        <option value="<?php echo $department['name']; ?>"> <?php echo $department['name']; ?> </option>
+      <?php endforeach; ?>
+    </select>
+    <input type="submit" name="remove" value="Remove">
         
 </form>
 

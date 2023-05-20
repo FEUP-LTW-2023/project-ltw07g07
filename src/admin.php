@@ -105,6 +105,9 @@ function assignAgent($agent, $id){
     $stmt->bindParam(':agent_id', $agent_id);
     $stmt->bindParam(':ticket_id', $id);
     $stmt->execute();
+    $stmt = $db->prepare("UPDATE ticket SET status = 'Assigned' WHERE id = :ticket_id");
+    $stmt->bindParam(':ticket_id', $id);
+    $stmt->execute();
   }
   header('Location: admin.php');
   exit();
