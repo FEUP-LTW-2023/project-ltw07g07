@@ -58,15 +58,17 @@ $stmt->execute();
 $departments = $stmt->fetchAll();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (isset($_POST["department"]) && isset($_POST["sort"])) {
+  if (isset($_POST["department"]) && isset($_POST["sort"]) && isset($_POST["agent"])) {
     $dep = $_POST["department"];
     $option = $_POST["sort"];
-    showDepEach($dep, $option);
-  } else if (isset($_POST["idTicket"])) {
+    $agent = $_POST["agent"];
+    showDepEach($dep, $option, $agent);
+  } 
+  else if (isset($_POST["idTicket"])) {
     $idTicket = $_POST['idTicket'];
     closeTicket($idTicket);
   }
-  else if (isset($_POST["agent"])) {
+  else if (isset($_POST["agent"]) && isset($_POST["id_t"])) {
     $agent = $_POST["agent"];
     $id_t = $_POST["id_t"];
     assignAgent($agent, $id_t);
@@ -95,82 +97,177 @@ function assignAgent($agent, $id){
   $stmt->execute();
   $result = $stmt->fetch();
   
-  if ($result) {
+  $stmt = $db->prepare("SELECT status FROM ticket WHERE id = :ticket_id");
+  $stmt->bindParam(':ticket_id', $id);
+  $stmt->execute();
+  $ticket = $stmt->fetch();
+  
+  if ($result && $ticket) {
     $agent_id = $result['id'];
-    
-    $stmt = $db->prepare("UPDATE ticket SET assigned_to = :agent_id WHERE id = :ticket_id");
-    $stmt->bindParam(':agent_id', $agent_id);
-    $stmt->bindParam(':ticket_id', $id);
-    $stmt->execute();
+    $status = $ticket['status'];
+
+    if($status != 'Closed'){
+      $stmt = $db->prepare("UPDATE ticket SET assigned_to = :agent_id WHERE id = :ticket_id");
+      $stmt->bindParam(':agent_id', $agent_id);
+      $stmt->bindParam(':ticket_id', $id);
+      $stmt->execute();
+      $stmt = $db->prepare("UPDATE ticket SET status = 'Assigned' WHERE id = :ticket_id");
+      $stmt->bindParam(':ticket_id', $id);
+      $stmt->execute();
+    }
   }
   header('Location: agent.php');
   exit();
 }
 
-function showDepEach($dep, $option){
+
+
+function showDepEach($dep, $option, $agent){
   global $db;
   global $tickets;
   if ($dep == "all"){
-    if ($option == "date"){
-      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-      ,ticket.priority
-      FROM ticket
-      JOIN user where ticket.client_id = user.id");
-      $stmt->execute();
-      $tickets = $stmt->fetchAll();
+    if ($agent == "all"){
+      if ($option == "date"){
+        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        JOIN user where ticket.client_id = user.id");
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "status"){
+        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        JOIN user where ticket.client_id = user.id
+        and (ticket.status = 'Open' or ticket.status = 'Assigned')");
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "priority"){
+        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        JOIN user where ticket.client_id = user.id
+        ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
     }
-    else if ($option == "status"){
-      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-      ,ticket.priority
-      FROM ticket
-      JOIN user where ticket.client_id = user.id
-      and (ticket.status = 'Open' or ticket.status = 'Assigned')");
-      $stmt->execute();
-      $tickets = $stmt->fetchAll();
-    }
-    else if ($option == "priority"){
-      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-      ,ticket.priority
-      FROM ticket
-      JOIN user where ticket.client_id = user.id
-      ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
-      $stmt->execute();
-      $tickets = $stmt->fetchAll();
+    else{
+      if ($option == "date"){
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
+        FROM ticket
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where assigned_to_user.name = :agent");
+        $stmt->bindParam(':agent', $agent);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "status"){
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
+        FROM ticket
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where (ticket.status = 'Open' or ticket.status = 'Assigned') and assigned_to_user.name = :agent");
+        $stmt->bindParam(':agent', $agent);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "priority"){
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
+        FROM ticket
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where assigned_to_user.name = :agent
+        ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
+        $stmt->bindParam(':agent', $agent);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
     }
   }
-  
   else {
-    if ($option == "date"){
-      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-      ,ticket.priority
-      FROM ticket
-      JOIN user where ticket.client_id = user.id and ticket.department = :dep");
-      $stmt->bindParam(':dep', $dep);
-      $stmt->execute();
-      $tickets = $stmt->fetchAll();
+    if ($agent == "all"){
+      if ($option == "date"){
+        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        JOIN user where ticket.client_id = user.id and ticket.department = :dep");
+        $stmt->bindParam(':dep', $dep);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "status"){
+        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        JOIN user where ticket.client_id = user.id and ticket.department = :dep
+        and (ticket.status = 'Open' or ticket.status = 'Assigned')");
+        $stmt->bindParam(':dep', $dep);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "priority"){
+        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        JOIN user where ticket.client_id = user.id and ticket.department = :dep
+        ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
+        $stmt->bindParam(':dep', $dep);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
     }
-    else if ($option == "status"){
-      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-      ,ticket.priority
-      FROM ticket
-      JOIN user where ticket.client_id = user.id and ticket.department = :dep
-      and (ticket.status = 'Open' or ticket.status = 'Assigned')");
-      $stmt->bindParam(':dep', $dep);
-      $stmt->execute();
-      $tickets = $stmt->fetchAll();
-    }
-    else if ($option == "priority"){
-      $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-      ,ticket.priority
-      FROM ticket
-      JOIN user where ticket.client_id = user.id and ticket.department = :dep
-      ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
-      $stmt->bindParam(':dep', $dep);
-      $stmt->execute();
-      $tickets = $stmt->fetchAll();
+    else{
+      if ($option == "date"){
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        INNER JOIN user as client on ticket.client_id = client.id 
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where assigned_to_user.name = :agent and ticket.department = :dep");
+        $stmt->bindParam(':dep', $dep);
+        $stmt->bindParam(':agent', $agent);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "status"){
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        INNER JOIN user as client on ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where assigned_to_user.name = :agent  and ticket.department = :dep
+        and (ticket.status = 'Open' or ticket.status = 'Assigned')");
+        $stmt->bindParam(':dep', $dep);
+        $stmt->bindParam(':agent', $agent);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
+      else if ($option == "priority"){
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority
+        FROM ticket
+        INNER JOIN user as client on ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where assigned_to_user.name = :agent and ticket.department = :dep
+        ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
+        $stmt->bindParam(':dep', $dep);
+        $stmt->bindParam(':agent', $agent);
+        $stmt->execute();
+        $tickets = $stmt->fetchAll();
+      }
     }
   }
 }
+
+
+
 
 function changeDep($id_ttt, $change){
   global $db;
@@ -183,7 +280,7 @@ function changeDep($id_ttt, $change){
 }
 
 if ($_GET['function'] === 'showDepEach') {
-  showDepEach($_GET['dep'], $_GET['option']);
+  showDepEach($_GET['dep'], $_GET('option'), $_GET('agent'));
 }
 
 if ($_GET['function'] === 'closeTicket') {
@@ -236,13 +333,20 @@ if ($_GET['function'] === 'changeDep') {
     <option value="<?php echo $deparment['name']; ?>"> <?php echo $deparment['name']; ?> </option>
     <?php endforeach; ?>
   </select>
+
+  <label for="sort">Agent:</label>
+  <select name="agent">
+    <option value = "all"> All </option>
+    <?php foreach ($agents as $agent): ?>
+          <option value="<?php echo $agent['name']; ?>"> <?php echo $agent['name']; ?> </option>
+    <?php endforeach; ?>
+  </select>
   
   <label for="sort">Sort by:</label>
   <select id="sort" name="sort">
     <option value="date">Date</option>
     <option value="status">Status</option>
     <option value="priority">Priority</option>
-    <option value="agent">Assigned Agent</option>
     <option value="hashtag">Hashtag</option>
   </select>
   <input type="submit" value="Submit">
