@@ -8,10 +8,14 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+
+
+
 $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
 $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
+
 
 $stmt = $db->prepare("SELECT * FROM user WHERE status = 'Agent' or status = 'Admin'");
 $stmt->execute();
@@ -314,9 +318,30 @@ function changeDep($id_ttt, $change){
   exit();
 }
 
+
+
 function showHashtag($hashtag){
-  
+  global $db;
+  global $tickets;
+  $newDisplayTicket;
+
+  foreach ($tickets as $key => $ticket) {
+    if (!(str_contains($ticket['message'], "#".$hashtag))) {
+        unset($tickets[$key]);
+    }
+  }
 }
+
+
+function gethashtags(){
+$stmt = $db->prepare("SELECT * FROM hashtag");
+$stmt->execute();
+$allhashtags = $stmt->fetch();
+return $allhashtags;
+}
+
+
+
 
 if ($_GET['function'] === 'showDepEach') {
   showDepEach($_GET['dep'], $_GET('option'), $_GET('agent'));
@@ -334,7 +359,7 @@ if ($_GET['function'] === 'changeDep') {
   assignAgent($_GET['id_ttt'], $_GET['depChange']);
 }
 
-if ($_GET['function' === 'showHashtag']){
+if ($_GET['function'] === 'showHashtag'){
   showHashtag($_GET['hashtag']);
 }
 
@@ -400,8 +425,8 @@ if ($_GET['function' === 'showHashtag']){
   <input type="submit" value="Submit">
 </form>
 
-<form action = "" method = "POST">
-  <input type = "text" value = "hashtag">
+<form action ="" method = "POST">
+  <input type = "text" value ="" name="hashtag" placeholder="Enter hashtag">
   <input type="submit" value="Submit">
 </form>
 

@@ -34,3 +34,27 @@ function showFormFaq(){
 function showReplyFaq(ticketId){
     document.getElementById("reply-faq-" + ticketId).style.display = "block";
 }
+
+/*
+var options;
+
+function getval(){
+var xhr = new XMLHttpRequest();
+
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      var variableValue = xhr.responseText;
+      options = variableValue;
+      
+    } else {
+      console.error('Error: ' + xhr.status);
+    }
+  }
+};
+
+xhr.open('GET', 'gethashtags.php', true);
+xhr.send();
+}
+
+*/
