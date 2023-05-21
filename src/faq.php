@@ -17,8 +17,10 @@ $user = $stmt->fetch();
 if (isset($_POST['submit_faq'])) {
     $question = $_POST['question'];
     $answer = $_POST['answer'];
+    $title = $_POST['title'];
 
-    $stmt = $db->prepare("INSERT INTO faq (question, answer) VALUES (:question, :answer)");
+    $stmt = $db->prepare("INSERT INTO faq (title, question, answer) VALUES (:title, :question, :answer)");
+        $stmt->bindParam(':title', $title);
         $stmt->bindParam(':question', $question);
         $stmt->bindParam(':answer', $answer);
         $stmt->execute();  
@@ -44,13 +46,13 @@ $faq = $stmt->fetchAll();
         <h1><a href="admin.php">Trouble Ticket Handler</a></h1>
     <?php  elseif ($user['status'] == 'Agent'): ?>
         <h1><a href="agent.php">Trouble Ticket Handler</a></h1>
-    <?php else: ?>
-        <h1><a href="main.php">Trouble Ticket Handler</a></h1>
     <?php endif; ?>
   </header>
 
   <a href="#" class = "a-prof" onclick="showFormFaq()">Create new FAQ</a>
   <form id="faq" style="display: none;" action="#" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
     <label for="question">Question:</label>
     <textarea id="question" name="question" rows="5" required></textarea>
     <label for="answer">Answer:</label>
@@ -61,7 +63,8 @@ $faq = $stmt->fetchAll();
 
   <?php foreach ($faq as $f): ?>
   <div id="faq" style = "padding-bottom: 200px">
-    <p id = "question"><?= $f['question'] ?></h2>
+    <h3 id = title><?= $f['title'] ?></h3>
+    <p id = "question"><?= $f['question'] ?></p>
     <p id = "answer" ><?= $f['answer'] ?></p>
   </div>
   <?php endforeach; ?>

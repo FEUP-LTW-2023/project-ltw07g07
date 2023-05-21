@@ -34,7 +34,8 @@ $faq = $stmt->fetchAll();
 
   <?php foreach ($faq as $f): ?>
   <div id="faq" style = "padding-bottom: 200px">
-    <p id = "question"><?= $f['question'] ?></h2>
+    <h3 id = title><?= $f['title'] ?></h3>
+    <p id = "question"><?= $f['question'] ?></p>
     <p id = "answer" ><?= $f['answer'] ?></p>
   </div>
   <?php endforeach; ?>
