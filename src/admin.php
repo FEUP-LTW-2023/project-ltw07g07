@@ -10,6 +10,17 @@ if (!isset($_SESSION['user_id'])) {
 
 
 
+$stmt = $db->prepare("SELECT name FROM hashtag");
+$stmt->execute();
+$options = array();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $options[] = $row['name'];
+}
+
+$hashtagarr = json_encode($options);
+
+//echo 'var options = ' . json_encode($options) . ';';
+
 
 $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
 $stmt->bindParam(':id', $_SESSION['user_id']);
@@ -371,7 +382,8 @@ if ($_GET['function'] === 'showHashtag'){
     <title>Trouble Ticket Handler</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
-    <script src = "script.js"></script>
+    <script> var options = <?php echo $hashtagarr; ?>; </script>
+    <script src = "script.js" defer> </script>
 </head>
 
 <body>
@@ -426,7 +438,8 @@ if ($_GET['function'] === 'showHashtag'){
 </form>
 
 <form action ="" method = "POST">
-  <input type = "text" value ="" name="hashtag" placeholder="Enter hashtag">
+  <input type = "text" id = "input" value ="" name="hashtag" placeholder="Enter hashtag">
+  <ul class = "list"> </ul>
   <input type="submit" value="Submit">
 </form>
 

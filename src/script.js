@@ -35,9 +35,10 @@ function showReplyFaq(ticketId){
     document.getElementById("reply-faq-" + ticketId).style.display = "block";
 }
 
-/*
-var options;
 
+
+
+/*
 function getval(){
 var xhr = new XMLHttpRequest();
 
@@ -56,5 +57,57 @@ xhr.onreadystatechange = function() {
 xhr.open('GET', 'gethashtags.php', true);
 xhr.send();
 }
-
 */
+
+
+
+
+//var options = ["teste","teste2","teste3","ajuda","muitocomplicado"];
+
+let sortedNames = options.sort();
+
+
+let input = document.getElementById("input");
+
+
+input.addEventListener("keyup", (e) => {
+    removeElements();
+    for (let i of sortedNames) {
+
+        
+        if(i.toLowerCase().startsWith(input.value.
+            toLowerCase()) && input.value != ""
+            ) {
+
+                let listItem = document.createElement("li");
+
+
+                listItem.classList.add("list-items");
+                listItem.style.cursor = "pointer";
+                listItem.setAttribute("onclick", "displayNames('"
+                 + i + "')");
+                 let word = "<b>" + i.substring(0, input.value.lenth)
+                 + "</b>";
+                //word+= i.substring(input.value.lenth);
+                //console.log(word);
+                listItem.innerHTML = word;
+                document.querySelector(".list").appendChild(listItem);
+
+            }
+    }
+
+});
+
+
+function displayNames(value){
+    input.value = value;
+}
+
+function removeElements(){
+
+    let items = document.querySelectorAll(".list-items");
+    items.forEach((item)=> {
+        item.remove();
+        
+    });
+}
