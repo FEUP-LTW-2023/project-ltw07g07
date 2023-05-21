@@ -320,7 +320,10 @@ if ($_GET['function'] === 'changeDep') {
         <li class="second"><?= $user['name'] ?></li>
     </a>
     <a href="admin_menu.php">
-        <li class = "last"> Admin Menu </li>
+        <li class = "third"> Admin Menu </li>
+    </a>
+    <a href="faq.php">
+        <li class="last">FAQ</li>
     </a>
 </ul>
 
