@@ -105,6 +105,11 @@ function closeTicket($idTicket){
     $stmt = $db->prepare("UPDATE ticket SET status = 'Closed' WHERE id = :ticket_id");
     $stmt->bindParam(':ticket_id', $idTicket);
     $stmt->execute();
+
+    $stmt = $db->prepare("UPDATE user SET closed = closed + 1 where id = :userId");
+    $stmt->bindParam(':userId', $_SESSION['user_id']);
+    $stmt->execute();
+
     header('Location: admin.php');
     exit();
 }

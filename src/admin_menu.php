@@ -107,11 +107,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div id = "user">
         <h3><?= $user['name'] ?></h3>
         <p><?= $user['status'] ?></p>
-        <p><?= $user['department'] ?></p>
+        <?php if($user['status']== 'Agent' or $user['status']== 'Admin'): ?>
+          <p><?= $user['closed'] . " closed tickets" ?></p>  
+          <p><?= $user['department'] ?></p>
+        <?php endif; ?>
       </div>
       <?php if($user['status']== 'Agent' or $user['status']== 'Admin'){ ?>
       <div id = "assign-agent">
-      
         <form action="#" method="post">
           <label for="department">Department:</label>
           <select name="department">
