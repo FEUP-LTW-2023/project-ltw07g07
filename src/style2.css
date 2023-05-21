@@ -409,3 +409,29 @@ a#reply-link {
   padding-top: 10px;
 }
 
+#faq-display{
+  margin-top: 80px;
+  background-color: #fff;
+  padding: 20px;
+}
+
+#title{
+  margin-left: 100px;
+  font-size: 20px;
+  padding-bottom: 15px;
+  text-shadow: black 1px 1px 1px;
+}
+
+#question{
+  margin-left: 30px;
+  font-size: 20px;
+  padding-bottom: 20px;
+  font-weight: bold;
+}
+
+#answer{
+  margin-left: 20px;
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
