@@ -26,3 +26,7 @@ function showFormRem() {
 function showFormProfile() {
     document.getElementById("myForm").style.display = "block";
 }
+
+function showFormFaq(){
+    document.getElementById("faq").style.display = "block";
+}

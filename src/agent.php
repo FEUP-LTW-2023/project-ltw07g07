@@ -319,7 +319,10 @@ if ($_GET['function'] === 'changeDep') {
         <li class="first">Create new Ticket</li>
     </a>
     <a href="profile.php">
-        <li class="last"><?= $user['name'] ?></li>
+        <li class="second"><?= $user['name'] ?></li>
+    </a>
+    <a href="faq.php">
+        <li class="last">FAQ</li>
     </a>
 </ul>
 

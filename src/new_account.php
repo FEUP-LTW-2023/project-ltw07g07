@@ -2,7 +2,7 @@
 require_once('connection.php');
 $db = getDataBaseConnection();
 
-$errors = array(); // Array to store error messages
+$errors = array();
 
 if (isset($_POST['register'])) {
   $name = $_POST['name'];

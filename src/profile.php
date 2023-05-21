@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':id', $_SESSION['user_id']);
     $stmt->execute();
     
-    // Update the $user variable with the new data
     $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
     $stmt->bindParam(':id', $_SESSION['user_id']);
     $stmt->execute();
@@ -62,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
 </header>
 
-
     <a href="login.php" class = "a-prof">Logout</a>
     
     <p class = "p-prof1"> Name: <?=$user['name']?> </p> 
@@ -79,15 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="email" id="email" name="email"><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password"><br>
-        <input type="submit" value="Edit">
-        
+        <input type="submit" value="Edit">     
     </form>
 
     <br>
 
-    
-
     <footer>
-    &copy; Trouble Ticket
+        &copy; Trouble Ticket
     </footer>
 </html>

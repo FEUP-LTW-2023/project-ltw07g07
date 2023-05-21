@@ -32,9 +32,8 @@ CREATE TABLE ticket (
 DROP TABLE IF EXISTS faq;
 CREATE TABLE faq (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  client_id INTEGER NOT NULL,
-  message TEXT NOT NULL,
-  FOREIGN KEY (client_id) REFERENCES users(id)
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS reply;

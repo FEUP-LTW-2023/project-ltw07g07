@@ -4,20 +4,16 @@ session_start();
 require_once('connection.php');
 $db = getDataBaseConnection();
 
-// check if user is logged in
 if (!isset($_SESSION['user_id'])) {
   header('Location: login.php');
   exit();
 }
-
-// retrieve user data from the database
 
 $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
 $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
 $user = $stmt->fetch();
 
-// check if the form has been submitted
 if (isset($_POST['submit_ticket'])) {
 
   $message = $_POST['message'];
@@ -46,20 +42,16 @@ if (isset($_POST['submit_ticket'])) {
   exit();
 }
 
-
 $stmt = $db->prepare("SELECT name FROM department ORDER BY id ASC");
 $stmt->execute();
 $departments = $stmt->fetchAll();
 
-
-// retrieve tickets submitted by the user
 $stmt = $db->prepare("SELECT * FROM ticket WHERE client_id = :client_id");
 $stmt->bindParam(':client_id', $_SESSION['client_id']);
 $stmt->execute();
 $tickets = $stmt->fetchAll();
 ?>
 
-<!-- ticket submission form -->
 <!DOCTYPE html>
 <html lang="en-US">
   <head>

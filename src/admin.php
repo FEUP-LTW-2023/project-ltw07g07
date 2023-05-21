@@ -302,7 +302,6 @@ if ($_GET['function'] === 'changeDep') {
     <title>Trouble Ticket Handler</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
-
     <script src = "script.js"></script>
 </head>
 
