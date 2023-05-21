@@ -212,8 +212,15 @@ ul a li {
 
 .second {
   padding: 30px;
-  padding-right: 100px;
-  padding-left: 100px;
+  padding-right: 80px;
+  padding-left: 80px;
+  background-color: rgb(81, 81, 207);
+}
+
+.third {
+  padding: 30px;
+  padding-right: 80px;
+  padding-left: 80px;
   background-color: rgb(81, 81, 207);
 }
 
@@ -340,8 +347,6 @@ a#reply-link {
   margin-right: 300px;
 }
 
-/* Existing CSS styles */
-
 #user {
   background-color: #fff;
   padding: 20px;
@@ -361,8 +366,6 @@ a#reply-link {
   margin-bottom: 0;
   color: #555;
 }
-
-/* Updated CSS to display status below the name */
 
 #user {
   display: flex;
