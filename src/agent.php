@@ -128,27 +128,30 @@ function showDepEach($dep, $option, $agent){
   if ($dep == "all"){
     if ($agent == "all"){
       if ($option == "date"){
-        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
-        JOIN user where ticket.client_id = user.id");
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id");
         $stmt->execute();
         $tickets = $stmt->fetchAll();
       }
       else if ($option == "status"){
-        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
-        JOIN user where ticket.client_id = user.id
-        and (ticket.status = 'Open' or ticket.status = 'Assigned')");
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where (ticket.status = 'Open' or ticket.status = 'Assigned')");
         $stmt->execute();
         $tickets = $stmt->fetchAll();
       }
       else if ($option == "priority"){
-        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
-        JOIN user where ticket.client_id = user.id
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
         ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
         $stmt->execute();
         $tickets = $stmt->fetchAll();
@@ -194,29 +197,35 @@ function showDepEach($dep, $option, $agent){
   else {
     if ($agent == "all"){
       if ($option == "date"){
-        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
-        JOIN user where ticket.client_id = user.id and ticket.department = :dep");
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where ticket.department = :dep");
         $stmt->bindParam(':dep', $dep);
         $stmt->execute();
         $tickets = $stmt->fetchAll();
       }
       else if ($option == "status"){
-        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
-        JOIN user where ticket.client_id = user.id and ticket.department = :dep
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where ticket.department = :dep
         and (ticket.status = 'Open' or ticket.status = 'Assigned')");
         $stmt->bindParam(':dep', $dep);
         $stmt->execute();
         $tickets = $stmt->fetchAll();
       }
       else if ($option == "priority"){
-        $stmt = $db->prepare("SELECT user.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
-        JOIN user where ticket.client_id = user.id and ticket.department = :dep
+        INNER JOIN user as client ON ticket.client_id = client.id
+        LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
+        where ticket.department = :dep
         ORDER BY CASE WHEN priority = 'High' THEN 0 ELSE 1 END");
         $stmt->bindParam(':dep', $dep);
         $stmt->execute();
@@ -226,7 +235,7 @@ function showDepEach($dep, $option, $agent){
     else{
       if ($option == "date"){
         $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
         INNER JOIN user as client on ticket.client_id = client.id 
         LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
@@ -238,7 +247,7 @@ function showDepEach($dep, $option, $agent){
       }
       else if ($option == "status"){
         $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
         INNER JOIN user as client on ticket.client_id = client.id
         LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
@@ -251,7 +260,7 @@ function showDepEach($dep, $option, $agent){
       }
       else if ($option == "priority"){
         $stmt = $db->prepare("SELECT client.name as client_name, ticket.message, ticket.status, ticket.department as dep, ticket.id as ticket_id
-        ,ticket.priority
+        ,ticket.priority, assigned_to_user.name as assigned_to_name
         FROM ticket
         INNER JOIN user as client on ticket.client_id = client.id
         LEFT JOIN user as assigned_to_user ON ticket.assigned_to = assigned_to_user.id
@@ -265,7 +274,6 @@ function showDepEach($dep, $option, $agent){
     }
   }
 }
-
 
 
 
