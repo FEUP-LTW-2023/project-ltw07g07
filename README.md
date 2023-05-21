@@ -6,8 +6,8 @@ Nuno Silva - 202108827 <br />
 Tiago Azevedo - 202108840 <br />
 
 ## Comandos para executar o projeto: <br/>
-git clone 
-git checkout final-delivery-v1
-php -S localhost:9000
+git clone <br /> 
+git checkout final-delivery-v1 <br />
+php -S localhost:9000 <br />
 
 
