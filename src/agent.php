@@ -8,6 +8,16 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+$stmt = $db->prepare("SELECT name FROM hashtag");
+$stmt->execute();
+$options = array();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $options[] = $row['name'];
+}
+
+$hashtagarr = json_encode($options);
+
+
 $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
 $stmt->bindParam(':id', $_SESSION['user_id']);
 $stmt->execute();
@@ -16,6 +26,10 @@ $user = $stmt->fetch();
 $stmt = $db->prepare("SELECT * FROM user WHERE status = 'Agent' or status = 'Admin'");
 $stmt->execute();
 $agents = $stmt->fetchAll();
+
+
+
+
 
 if ($user['status'] != 'Agent'){
   header('Location: login.php');
@@ -95,6 +109,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_ttt = $_POST['id_ttt'];
     $change = $_POST['depChange'];
     changeDep($id_ttt, $change);
+  }
+  else if (isset($_POST["hashtag"])) {
+    $hashtag = $_POST['hashtag'];
+    showHashtag($hashtag);
   }
 }
 
@@ -326,6 +344,10 @@ if ($_GET['function'] === 'changeDep') {
   assignAgent($_GET['id_ttt'], $_GET['depChange']);
 }
 
+if ($_GET['function'] === 'showHashtag'){
+  showHashtag($_GET['hashtag']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -334,8 +356,8 @@ if ($_GET['function'] === 'changeDep') {
     <title>Trouble Ticket Handler</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
-
-    <script src = "script.js"></script>
+    <script> var options = <?php echo $hashtagarr; ?>; </script>
+    <script src = "script.js" defer></script>
 </head>
 
 <body>
@@ -385,6 +407,13 @@ if ($_GET['function'] === 'changeDep') {
   </select>
   <input type="submit" value="Submit">
 </form>
+
+<form action ="" method = "POST">
+  <input type = "text" id = "input" value ="" name="hashtag" placeholder="Enter hashtag">
+  <ul class = "list"> </ul>
+  <input type="submit" value="Submit">
+</form>
+
 
 <section id = "tickets">
 

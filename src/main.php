@@ -3,6 +3,7 @@ session_start();
 require_once('connection.php');
 $db = getDataBaseConnection();
 
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
@@ -65,7 +66,7 @@ $departments = $stmt->fetchAll();
     <title>Trouble Ticket Handler</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style2.css">
-
+    <script> var options = <?php echo $hashtagarr; ?>; </script>
     <script src = "script.js"></script>
 </head>
 
