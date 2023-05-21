@@ -52,11 +52,11 @@ $faq = $stmt->fetchAll();
   <a href="#" class = "a-prof" onclick="showFormFaq()">Create new FAQ</a>
   <form id="faq" style="display: none;" action="#" method="POST">
     <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
+    <input type="text" name="title" required>
     <label for="question">Question:</label>
-    <textarea id="question" name="question" rows="5" required></textarea>
+    <textarea name="question" rows="5" required></textarea>
     <label for="answer">Answer:</label>
-    <textarea id="answer" name="answer" rows="5" required></textarea>
+    <textarea name="answer" rows="5" required></textarea>
 
     <input type="submit" name="submit_faq" value="Submit">
   </form>
