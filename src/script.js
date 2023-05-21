@@ -30,3 +30,7 @@ function showFormProfile() {
 function showFormFaq(){
     document.getElementById("faq").style.display = "block";
 }
+
+function showReplyFaq(ticketId){
+    document.getElementById("reply-faq-" + ticketId).style.display = "block";
+}

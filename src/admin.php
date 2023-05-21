@@ -47,6 +47,20 @@ if (isset($_POST['reply'])) {
 
 }
 
+if (isset($_POST['faq-reply'])) {
+
+  $answer = $_POST['answer'];
+  $ticket_id = $_POST['ticket_id'];
+
+  $stmt = $db->prepare("INSERT INTO reply (client_id, message, ticket_id) VALUES (:client_id, :message,:ticket_id)");
+  $stmt->bindParam(':client_id', $_SESSION['user_id']);
+  $stmt->bindParam(':message', $answer);
+  $stmt->bindParam(':ticket_id', $ticket_id);
+
+  $stmt->execute();
+
+}
+
 
 $stmt = $db->prepare("SELECT message, ticket_id, name FROM reply, user
                       WHERE user.id = client_id
@@ -59,6 +73,9 @@ $stmt = $db->prepare("SELECT name, id FROM department ORDER BY id ASC");
 $stmt->execute();
 $departments = $stmt->fetchAll();
 
+$stmt = $db->prepare("SELECT * FROM faq");
+$stmt->execute();
+$faq = $stmt->fetchAll();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST["department"]) && isset($_POST["sort"]) && isset($_POST["agent"])) {
@@ -278,7 +295,6 @@ function showDepEach($dep, $option, $agent){
   }
 }
 
-
 function changeDep($id_ttt, $change){
   global $db;
   $stmt = $db->prepare("UPDATE ticket SET department = :new WHERE id = :ticket_id");
@@ -432,6 +448,18 @@ if ($_GET['function'] === 'changeDep') {
     <textarea id="message" name="message" rows="5" required></textarea>
     <input type="hidden" name="ticket_id" value="<?= $ticket['ticket_id'] ?>">
     <input type="submit" name="reply" value="Reply">
+  </form>
+
+  <a href="#" class="reply-ticket" onclick="showReplyFaq(<?= $ticket['ticket_id'] ?>)">Reply with FAQ</a>
+  <form id="reply-faq-<?= $ticket['ticket_id'] ?>" style="display: none;" action="" method="post">
+    <select name = "faq-reply">
+      <?php foreach ($faq as $f):?>
+        <option value = "<?php echo $f['title']; ?>"> <?php echo $f['answer']; ?> </option>
+      <?php endforeach; ?>
+    </select>
+    <input type="hidden" name="answer" value="<?= $f['answer'] ?>">
+    <input type="hidden" name="ticket_id" value="<?= $ticket['ticket_id'] ?>">
+    <input type="submit" name="faq-reply" value="Reply">
   </form>
 
 <?php endforeach; ?>
