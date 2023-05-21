@@ -4,12 +4,22 @@ $db = getDataBaseConnection();
 
 $errors = array();
 
+$stmt = $db->prepare("SELECT * FROM user where status = 'Admin'");
+$stmt->execute();
+$admins = $stmt->fetchAll();
+$numAdmins = count($admins);
+
 if (isset($_POST['register'])) {
   $name = $_POST['name'];
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
-  $status = $_POST['status'];
+  if ($numAdmins == 0){
+    $status = $_POST['status'];
+  }
+  else {
+    $status = 'Client';
+  }
 
   $stmt = $db->prepare("SELECT * FROM user");
   $stmt->execute();
@@ -78,12 +88,14 @@ if (isset($_POST['register'])) {
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
 
-    <label for="status">Status:</label>
-    <select id="status" name="status">
-      <option value="Client">Client</option>
-      <option value="Agent">Agent</option>
-      <option value="Admin">Admin</option>
-    </select>
+    <?php if ($numAdmins == 0):?>
+      <label for="status">Status:</label>
+      <select id="status" name="status">
+        <option value="Client">Client</option>
+        <option value="Agent">Agent</option>
+        <option value="Admin">Admin</option>
+      </select>
+    <?php endif; ?>
 
     <input type="submit" name="register" value="Register">
   </form>
