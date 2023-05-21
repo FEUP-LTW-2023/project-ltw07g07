@@ -47,3 +47,9 @@ CREATE TABLE reply (
   FOREIGN KEY (client_id) REFERENCES users(id),
   FOREIGN KEY (ticket_id) REFERENCES tickets(id)
 );
+
+DROP TABLE IF EXISTS hashtag;
+CREATE TABLE hashtag (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);

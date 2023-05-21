@@ -98,6 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $change = $_POST['depChange'];
     changeDep($id_ttt, $change);
   }
+  else if (isset($_POST["hashtag"])) {
+    $hashtag = $_POST['hashtag'];
+    showHashtag($hashtag);
+  }
 }
 
 function closeTicket($idTicket){
@@ -310,6 +314,10 @@ function changeDep($id_ttt, $change){
   exit();
 }
 
+function showHashtag($hashtag){
+  
+}
+
 if ($_GET['function'] === 'showDepEach') {
   showDepEach($_GET['dep'], $_GET('option'), $_GET('agent'));
 }
@@ -324,6 +332,10 @@ if ($_GET['function'] === 'assignAgent') {
 
 if ($_GET['function'] === 'changeDep') {
   assignAgent($_GET['id_ttt'], $_GET['depChange']);
+}
+
+if ($_GET['function' === 'showHashtag']){
+  showHashtag($_GET['hashtag']);
 }
 
 ?>
@@ -384,10 +396,15 @@ if ($_GET['function'] === 'changeDep') {
     <option value="date">Date</option>
     <option value="status">Status</option>
     <option value="priority">Priority</option>
-    <option value="hashtag">Hashtag</option>
   </select>
   <input type="submit" value="Submit">
 </form>
+
+<form action = "" method = "POST">
+  <input type = "text" value = "hashtag">
+  <input type="submit" value="Submit">
+</form>
+
 
 <section id = "tickets">
 

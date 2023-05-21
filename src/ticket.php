@@ -17,6 +17,26 @@ $user = $stmt->fetch();
 if (isset($_POST['submit_ticket'])) {
 
   $message = $_POST['message'];
+  $hashtag = str_contains($message, '#');
+  $hashtags;
+  if ($hashtag){
+    $hashtags = explode("#", $message);
+    for ($i = 1; $i < count($hashtags); $i++) {
+      $stmt = $db->prepare("SELECT id FROM hashtag where name = :name");
+      $stmt->bindParam(':name', $hashtags[$i]);
+      $stmt->execute();
+      $idH = $stmt->fetch();
+
+      if ($idH > 0){
+        continue;
+      }
+      else{
+        $stmt = $db->prepare("INSERT INTO hashtag (name) VALUES (:name)");
+        $stmt->bindParam(':name', $hashtags[$i]);
+        $stmt->execute();
+      }
+    }
+  }
   $department = $_POST['department'];
   $priority = 'Low';
   if ($_POST['high'] == 'on'){
