@@ -10,6 +10,7 @@ git clone git@github.com:FEUP-LTW-2023/project-ltw07g07.git <br />
 cd project-ltw07g07 <br/>
 git checkout final-delivery-v1 <br />
 cd src <br/>
+wsl <br/>
 php -S localhost:9000 <br />
 Open localhost:9000 on browser and login or create new account
 
